@@ -12,4 +12,20 @@
  *
  *= require_tree .
  *= require_self
+
+ // Custom bootstrap variables must be set or imported *before* bootstrap.
  */
+ .nav-link,.navbar-brand,a{
+   font-weight: 600;
+ }
+ .link{
+   color: #000000 !important
+ }
+ th,tr{
+   text-align: center !important
+ }
+.msg{
+  color: #ff0000;
+  font-weight: 600;
+}
+@import "bootstrap";

@@ -1,0 +1,54 @@
+<div class="col-lg-12" style="background-color: #e9ecef">
+  <br>
+  <div class="row">
+      <div class="col-lg-6" style="padding-left: 35px; border: 0px solid">
+        <%= form_tag({controller: "notes", action: "search_note"}, method: "post", class: "form-inline", remote: true) do %>
+            <input type="text" name="search" value="" placeholder="Start Your Search" class="form-control" id="search">&nbsp;&nbsp;
+            <input type="submit" name="submit" value="Search" class="btn btn-info">
+        <% end %>
+      </div>
+      <div class="col-6" align="right">
+        <%= link_to 'Add New Note', new_note_path ,remote: true, class: "btn btn-info" %>
+      </div>
+  </div>
+  <hr>
+</div>
+<div class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-3">
+      <center><h4>Your Recent Notes</h4><center>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3" style="border: 0px solid;height:500px; overflow: auto;">
+      <table class="table table-bordered table-striped" style="padding: 25px; width:90% !important" align="center">
+        <tbody id="notes">
+        <%= render 'data' %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-9" style="border: 0px solid; padding-right: 20px" id="note_comment">
+
+    </div>
+  </div>
+</div>
+<!-- all modals -->
+<div class="modal fade" id="note"></div>
+<div class="modal fade" id="comment"></div>
+<script type="text/javascript">
+  /*$(document).ready(function(){
+    $("#search").keyup(function(){
+      search = this.value
+      $.ajax({
+        type: 'GET',
+        data: {'search' : search },
+        url: "/notes/search_note",
+        success: function(data){
+          console.log(data)
+        }
+      }); //end of ajax
+      //search_note_path
+    });
+  }); //end of jquery*/
+</script>
