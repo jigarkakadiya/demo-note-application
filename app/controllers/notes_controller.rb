@@ -2,7 +2,6 @@
 class NotesController < ApplicationController
   def index
     @notes = Note.where("is_active = ?",true)
-    #@notes = Note.records
     @comments = Comment.all
   end
 

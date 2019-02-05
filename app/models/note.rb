@@ -5,8 +5,5 @@ class Note < ApplicationRecord
   belongs_to :user
   has_many :comments
 
-  def records
-    return Notes.where("is_active = true")
-  end
 end
 #Note.import(force: true)
