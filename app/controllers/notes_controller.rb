@@ -1,6 +1,8 @@
+#/usr/local/bin/elasticsearch
 class NotesController < ApplicationController
   def index
     @notes = Note.where("is_active = ?",true)
+    #@notes = Note.records
     @comments = Comment.all
   end
 
@@ -12,7 +14,7 @@ class NotesController < ApplicationController
     @note = Note.new(note_params)
     @note.user_id = current_user.id
     @note.save
-    @notes = Note.all
+    @notes = Note.records
   end
 
   def edit
@@ -53,7 +55,8 @@ class NotesController < ApplicationController
   end
 
   def search_note
-    @notes = Note.where("title LIKE ? or description LIKE ? and is_active = ?","#{params[:search]}%","#{params[:search]}%",true)
+    #@notes = Note.where("title LIKE ? or description LIKE ? and is_active = ?","#{params[:search]}%","#{params[:search]}%",true)
+    @notes = params[:search].nil? ? Note.record : Note.search(params[:search])
   end
   private
   def note_params

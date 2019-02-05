@@ -12,5 +12,5 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
     devise_parameter_sanitizer.permit :accept_invitation, keys: [:email]
   end
-  
+
 end

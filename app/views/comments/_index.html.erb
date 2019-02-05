@@ -19,44 +19,33 @@
     <div class="col-lg-12">
       <% @comments.each do |comment| %>
       <div class="row">
-        <b><%= if comment.user.name==current_user.name then "You" else comment.user.name end %></b>&nbsp; commented on &nbsp; <b><%= comment.created_at.strftime("%d-%m-%Y") %></b>
+        <div class="col-lg-6">
+          <b><%= if comment.user.name==current_user.name then "You" else comment.user.name end %></b>&nbsp; commented on &nbsp; <b><%= comment.created_at.strftime("%d-%m-%Y") %></b>
+        </div>
+        <div class="col-lg-6" align="right">
+          <%= link_to 'Edit' , edit_note_comment_path(@note,comment), remote: :true, class: :link %> |
+          <%= link_to 'Delete', note_comment_path(@note,comment), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' }, class: :link %>
+        </div>
       </div>
       <div class="row">
-        <%= comment.description %>
+        <div class="col-lg-12">
+          <%= comment.description %>
+        </div>
       </div>
       <hr>
       <% end %>
-      <center><%= will_paginate @comments, remote: true %></center>
+      <div class="digg_pagination" align="center">
+        <div class="page_info" align="center">
+          <%= page_entries_info @comments %>
+        </div>
+        <div align="center" class="links">
+          <%= will_paginate @comments %>
+        </div>
+      </div>
     </div>
 <% end %>
-<!--<table class="table table-hover table-sm">
-  <tr class="thead-light">
-    <th width="10%">Sr. No</th>
-    <th>Comment</th>
-    <th width="15%">User</th>
-    <th width="10%">Date</th>
-    <th width="15%">Action</th>
-  </tr>
-
-<% if @note.comments.empty? %>
-  <tr>
-    <td colspan="4" align="center" class="msg">No Comments Added Yet For <%= @note.title %> !</td>
-  </tr>
-<% else %>
-  <% i=0; @comments.each do |comment| %>
-  <tr>
-    <td><%= i=i+1 %></td>
-    <td><pre style="font: inherit"><%= comment.description %></pre></td>
-    <td><%= comment.user.name %></td>
-    <td><%= comment.created_at %></td>
-    <td><%= link_to 'Edit' , edit_note_comment_path(@note,comment), remote: :true %> |
-    <%= link_to 'Delete', note_comment_path(@note,comment), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' } %></td>
-  </tr>
-  <% end %> <!-- end of do loop -->
-  <!--<tfoot>
-    <tr>
-      <td colspan="5"><%= will_paginate @comments, remote: true %></td>
-    </tr>
-  </tfoot>
-<% end %> <!-- end of if -->
-<!--</table>-->
+<script type="text/javascript">
+  $(function(){
+     $('.links a').attr('data-remote', 'true')
+   });
+</script>
