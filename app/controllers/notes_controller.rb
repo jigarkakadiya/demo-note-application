@@ -1,7 +1,7 @@
 #/usr/local/bin/elasticsearch
 class NotesController < ApplicationController
   def index
-    @notes = Note.where("is_active = ?",true)
+    @notes = Note.records
     @comments = Comment.all
   end
 
@@ -39,8 +39,8 @@ class NotesController < ApplicationController
     @note = Note.find(params[:id])
     respond_to do |format|
       if @note.update(is_active: false)
-        @notes = Note.where("is_active = true")
-        format.html { redirect_to action:'index', notice: 'Note Updated' }
+        @notes = Note.records
+        format.html { redirect_to action:'index', notice: 'Note Deleted' }
         format.js
         format.json { render json: @notes, status: :updated, location: @notes }
       else
@@ -55,7 +55,11 @@ class NotesController < ApplicationController
 
   def search_note
     #@notes = Note.where("title LIKE ? or description LIKE ? and is_active = ?","#{params[:search]}%","#{params[:search]}%",true)
-    @notes = params[:search].nil? ? Note.record : Note.search(params[:search])
+    if params[:search].nil? || params[:search] == ""
+      @notes = Note.records
+    else
+      @notes = Note.search(params[:search])
+    end
   end
   private
   def note_params

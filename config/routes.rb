@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'application/dashboard'
   post 'notes/search_note', to: "notes#search_note", as: :search_note
-  devise_for :users
+  devise_for :users, controllers: { confirmations: 'confirmations' }
   resources :notes do
     resources :comments
   end
