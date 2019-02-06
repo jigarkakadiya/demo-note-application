@@ -11,9 +11,14 @@
     <!-- Modal body -->
     <div class="modal-body">
       Title:
-      <%= frm.text_field :title, autocomplete: "current-password", class: "form-control", required: true %>
-      Description
-      <%= frm.text_area :description, autocomplete: "current-password", class: "form-control", required: true  %>
+      <%= frm.text_field :title, class: "form-control", required: true %>
+      Description:
+      <%= frm.text_area :description, class: "form-control", required: true  %>
+      Tags:
+      <%= frm.text_area :tag_list, class: "form-control", required: true  %><br>
+      Is This Note Important?&nbsp;
+      <%= frm.radio_button :is_important, true %> Yes&nbsp;&nbsp;&nbsp;
+      <%= frm.radio_button :is_important, false %> No
     </div>
 
     <!-- Modal footer -->

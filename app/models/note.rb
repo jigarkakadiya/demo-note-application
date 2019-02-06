@@ -5,6 +5,8 @@ class Note < ApplicationRecord
   belongs_to :user
   has_many :comments
   searchkick
+  acts_as_taggable
+  acts_as_taggable_on :tags
   #searchkick highlight: [:title,:description]
   Note.reindex
   def self.records

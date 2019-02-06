@@ -55,14 +55,19 @@ class NotesController < ApplicationController
 
   def search_note
     #@notes = Note.where("title LIKE ? or description LIKE ? and is_active = ?","#{params[:search]}%","#{params[:search]}%",true)
-    if params[:search].nil? || params[:search] == ""
-      @notes = Note.records
+    content = params[:search]
+    if content.nil? || content == ""
+      @notes =  Note.records
     else
-      @notes = Note.search(params[:search])
+      taged_note = Note.tagged_with(content)
+      searched_note = Note.search(content)
+      @notes = taged_note + searched_note
+      #@notes = Note.search(content)
     end
   end
+
   private
   def note_params
-    params.require(:note).permit(:title,:description)
+    params.require(:note).permit(:title,:description,:tag_list,:is_important)
   end
 end

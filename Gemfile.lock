@@ -42,6 +42,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (6.0.0)
+      activerecord (~> 5.0)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
     archive-zip (0.11.0)
@@ -108,6 +110,8 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.10.0)
+    font-awesome-rails (4.7.0.4)
+      railties (>= 3.2, < 6.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashie (3.6.0)
@@ -249,6 +253,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 6.0)
   bootsnap (>= 1.1.0)
   bootstrap
   bootstrap-sass
@@ -259,6 +264,7 @@ DEPENDENCIES
   devise
   elasticsearch-model
   elasticsearch-rails
+  font-awesome-rails
   jbuilder (~> 2.5)
   jquery-rails
   letter_opener
