@@ -1,5 +1,5 @@
 <!-- The Modal -->
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
   <div class="modal-content">
 
     <!-- Modal Header -->
@@ -10,15 +10,15 @@
     <%= form_with model:@note do |frm| %>
     <!-- Modal body -->
     <div class="modal-body">
-      Title:
-      <%= frm.text_field :title, class: "form-control", required: true %>
-      Description:
-      <%= frm.text_area :description, class: "form-control", required: true  %>
-      Tags:
-      <%= frm.text_area :tag_list, class: "form-control", required: true  %><br>
+      <b>Title:</b>
+      <%= frm.text_field :title, class: "form-control", required: true %><br>
+      <b>Description:</b>
+      <%= frm.text_area :description, class: "form-control tinymce", required: true  %><br>
+      <b>Tags:</b>
+      <%= frm.text_field :tag_list, class: "form-control"  %><br>
       Is This Note Important?&nbsp;
-      <%= frm.radio_button :is_important, true %> Yes&nbsp;&nbsp;&nbsp;
-      <%= frm.radio_button :is_important, false %> No
+      <%= frm.radio_button :is_important, true, required: true %> Yes&nbsp;&nbsp;&nbsp;
+      <%= frm.radio_button :is_important, false, required: true %> No
     </div>
 
     <!-- Modal footer -->
@@ -29,3 +29,4 @@
     <% end %>
   </div>
 </div>
+<%= tinymce %>

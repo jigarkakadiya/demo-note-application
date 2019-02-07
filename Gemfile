@@ -1,4 +1,3 @@
-
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -75,3 +74,4 @@ gem 'searchkick'
 gem 'letter_opener'
 gem 'acts-as-taggable-on', '~> 6.0'
 gem "font-awesome-rails"
+gem 'tinymce-rails'

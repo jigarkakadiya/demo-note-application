@@ -1,22 +1,86 @@
+<div class="col-lg-12" style="background-color: #e9ecef">
+  <br>
+  <div class="row">
+      <div class="col-12" align="right">
+      <%
+        if current_user.do_autosave
+          status = false
+        else
+          status = true
+        end
+      %>
+      <h5>Note auto save is <a href="/application/change_autosave/<%= status %>"><input type="checkbox" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger" <%= if !status then "checked" end %>></a></h5>
+
+      </div>
+  </div>
+  <hr>
+</div>
 <div class="container-fluid">
   <br>
   <div class="col-lg-12">
     <div class="row">
-      <div class="col-lg-4">
-        <div class="col-lg-12" style="border: 1px #A9A9A9 solid">
-          cfjrfjrij
+      <div class="col-lg-3" style="border: 0px #A9A9A9 solid">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: :true }) do |f| %>
+        <div class="col-lg-10" style="border: 0px #A9A9A9 solid">
+          <div class="card" style="width:250px">
+            <% if current_user.profile_photo.nil? %>
+              <img class="card-img-top" src="/img_avatar1.png" alt="Profile image">
+            <% else %>
+              <img class="card-img-top" src="<%= url_for(current_user.profile_photo) %>" alt="Profile image">
+            <% end %>
+            <div class="card-body">
+              <h5>Change Image Here</h5>
+              <%= f.file_field :profile_photo, direct_upload: true %>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="col-lg-12" style="border: 1px #A9A9A9 solid">
-          cfjrfjrij
+        <div class="col-lg-12" style="border: 0px #A9A9A9 solid">
+          <center><h4>Edit My Details</h4></center>
+          <hr>
+          <center><%= devise_error_messages! %></center>
+            <%= f.label :Name %><br />
+            <%= f.text_field :name, autocomplete: "name", class: "form-control" %><br>
+
+            <%= f.label :Contact %><br />
+            <%= f.text_field :contact, autocomplete: "contact", class: "form-control" %><br>
+
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            <br>
+            <center><%= f.submit "Update" , class: :"btn btn-info" %></center>
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="col-lg-12" style="border: 1px #A9A9A9 solid">
-          cfjrfjrij
+        <div class="col-lg-12" style="border: 0px #A9A9A9 solid">
+          <center><h4>Change My Password</h4></center>
+          <hr>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <% end %>
+
+          <div class="field">
+            <b><%= f.label :password %></b> <i>(leave blank if you don't want to change it)</i><br />
+            <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+            <% if @minimum_password_length %>
+              <em><%= @minimum_password_length %> characters minimum</em>
+            <% end %>
+          </div>
+          <div class="field">
+            <b><%= f.label :password_confirmation %></b><br />
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+          </div>
+
+          <div class="field">
+            <hr>
+            <b><%= f.label :current_password %></b><br />
+            <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", required: true %>
+            <em class="text-danger">Your current password is needed to confirm the changes</em>
+          </div>
         </div>
       </div>
     </div>
+    <% end %>
   </div>
 </div>

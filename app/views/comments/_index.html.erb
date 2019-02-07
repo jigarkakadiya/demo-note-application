@@ -3,6 +3,11 @@
     <div class="row">
       <div class="col-lg-6">
         <h5><u><b><%= @note.title %></b></u></h5>
+        <% if @note.is_important then %>
+          <p class="badge badge-success">Marked As Important</p>
+        <% else %>
+          <a href="/notes/change_importance/<%= @note.id%>/true" data-remote="true"><i class="fa fa-heart" style="color:#696969; font-size:20px"></i></a>
+        <% end %>
         <pre><%= @note.description %></pre>
         Tags : <% if @note.tag_list.empty?  %>
           <span class="msg">No Tags Added</span>

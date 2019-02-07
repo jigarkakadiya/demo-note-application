@@ -52,7 +52,7 @@ class NotesController < ApplicationController
 
   def show
   end
-
+  #custome functions starts
   def search_note
     #@notes = Note.where("title LIKE ? or description LIKE ? and is_active = ?","#{params[:search]}%","#{params[:search]}%",true)
     content = params[:search]
@@ -62,10 +62,16 @@ class NotesController < ApplicationController
       taged_note = Note.tagged_with(content)
       searched_note = Note.search(content)
       @notes = taged_note + searched_note
-      #@notes = Note.search(content)
     end
   end
 
+  def change_importance
+    @note = Note.find(params[:id])
+    @note.update(is_important: params[:status])
+    @notes = Note.records
+  end
+
+  #custom function ends
   private
   def note_params
     params.require(:note).permit(:title,:description,:tag_list,:is_important)

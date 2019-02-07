@@ -1,4 +1,6 @@
 $("#note").html("<%= escape_javascript(render partial: 'new' ) %>")
 $(".modal-title").text("Add New Note")
 $(".submit").attr("value","Add Note")
+tinymce.remove();
+tinymce.init({selector:'textarea'});
 $("#note").modal('show')

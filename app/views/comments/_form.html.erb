@@ -1,5 +1,5 @@
 <!-- The Modal -->
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
   <div class="modal-content">
 
     <!-- Modal Header -->
@@ -14,7 +14,7 @@
       <input type="text" name="" value="<%= @note.title %>" disabled="true" class="form-control">
       <%= frm.hidden_field :note_id, value: @note.id %>
       Comments :
-      <%= frm.text_area :description, autocomplete: "current-password", class: "form-control", required: true  %>
+      <%= frm.text_area :description, autocomplete: "current-password", class: "form-control tinymce", required: true  %>
     </div>
 
     <!-- Modal footer -->
@@ -25,3 +25,4 @@
     <% end %>
   </div>
 </div>
+<%= tinymce %>

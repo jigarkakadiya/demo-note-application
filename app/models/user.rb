@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
   has_many :notes
   has_many :comments
+  has_one_attached :profile_photo
 end
