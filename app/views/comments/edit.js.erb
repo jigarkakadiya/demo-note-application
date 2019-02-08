@@ -1,7 +1,4 @@
-console.log('clicked')
-$("#comment").html("<%= escape_javascript(render partial: 'edit' ) %>")
-$(".modal-title").text("Edit Comment")
-$(".submit").attr("value","Edit Comment")
-tinymce.remove();
-tinymce.init({selector:'textarea'});
-$("#comment").modal('show')
+$("#comment").html("<%= escape_javascript(render partial: 'edit' ) %>");
+$(".modal-title").text("Edit Comment");
+$(".submit").attr("value","Edit Comment");
+$("#comment").modal('show');

@@ -1,32 +1,27 @@
-<!-- The Modal -->
-<div class="modal-dialog modal-lg">
-  <div class="modal-content">
-
-    <!-- Modal Header -->
-    <div class="modal-header">
-      <h4 class="modal-title"></h4>
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-    </div>
-    <%= form_with model:@note do |frm| %>
-    <!-- Modal body -->
-    <div class="modal-body">
-      <b>Title:</b>
-      <%= frm.text_field :title, class: "form-control", required: true %><br>
-      <b>Description:</b>
-      <%= frm.text_area :description, class: "form-control tinymce", required: true  %><br>
-      <b>Tags:</b>
-      <%= frm.text_field :tag_list, class: "form-control"  %><br>
-      Is This Note Important?&nbsp;
-      <%= frm.radio_button :is_important, true, required: true %> Yes&nbsp;&nbsp;&nbsp;
-      <%= frm.radio_button :is_important, false, required: true %> No
-    </div>
-
+<%= form_with model: @note, id: :note_form do |note| %>
+  <!-- Modal body -->
+  <div class="modal-body">
+    <b>Title:</b>
+    <%= note.text_field :title, class: "form-control", required: true%><br>
+    <b>Description:</b>
+    <%= note.text_area :description, class: "form-control tinymce", rows: 15, cols: 120   %><br>
+    <b>Tags:</b>
+    <%= note.text_field :tag_list, class: "form-control"  %><br>
+    Is This Note Important?&nbsp;
+    <%= note.radio_button :is_important, true, required: true %> Yes&nbsp;&nbsp;&nbsp;
+    <%= note.radio_button :is_important, false, required: true %> No
+  </div>
+  <% if !current_user.do_autosave then %>
     <!-- Modal footer -->
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <%= frm.submit "", class: "btn btn-info submit" %>
+      <%= note.submit "", class: "btn btn-info submit" %>
     </div>
-    <% end %>
-  </div>
-</div>
+  <% end %>
+<% end %>
 <%= tinymce %>
+<script type="text/javascript">
+  <% if current_user.do_autosave %>
+    interval = setInterval(do_autosave,5000);
+  <% end %>
+</script>

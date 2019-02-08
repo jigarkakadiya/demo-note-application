@@ -3,13 +3,11 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def dashboard
-
   end
 
   def change_autosave
-    @user = current_user
-    @user.update(do_autosave: params[:status])
-    redirect_to edit_user_registration_path
+    current_user.update(do_autosave: params[:status])
+    current_user.do_autosave = params[:status]
   end
   protected
   def configure_permitted_parameters

@@ -14,6 +14,9 @@ class NotesController < ApplicationController
     @note.user_id = current_user.id
     @note.save
     @notes = Note.records
+    if current_user.do_autosave
+      render :json => { note_id: @note.id }
+    end
   end
 
   def edit
@@ -22,36 +25,22 @@ class NotesController < ApplicationController
 
   def update
     @note = Note.find(params[:id])
-    respond_to do |format|
-      if @note.update(note_params)
-        @notes = Note.where("is_active = true")
-        format.html { redirect_to action:'index', notice: 'Note Updated' }
-        format.js
-        format.json { render json: @notes, status: :updated, location: @notes }
+    if @note.update(note_params)
+      if current_user.do_autosave
+        render :json => { note_id: @note.id }
       else
-        format.html { render action: :edit }
-        format.json { render json: @note.errors, status: :unprocessable_entity }
-      end #end of if @dept.update
-    end
+        @notes = Note.records
+      end
+    end #end of if @dept.update
   end
 
   def destroy
     @note = Note.find(params[:id])
-    respond_to do |format|
-      if @note.update(is_active: false)
-        @notes = Note.records
-        format.html { redirect_to action:'index', notice: 'Note Deleted' }
-        format.js
-        format.json { render json: @notes, status: :updated, location: @notes }
-      else
-        format.html { render action: :edit }
-        format.json { render json: @note.errors, status: :unprocessable_entity }
-      end #end of if @dept.delete
-    end
+    if @note.update(is_active: false)
+      @notes = Note.records
+    end #end of if @dept.delete
   end
 
-  def show
-  end
   #custome functions starts
   def search_note
     #@notes = Note.where("title LIKE ? or description LIKE ? and is_active = ?","#{params[:search]}%","#{params[:search]}%",true)
@@ -71,6 +60,9 @@ class NotesController < ApplicationController
     @notes = Note.records
   end
 
+  def load_data
+    @notes = Note.records
+  end
   #custom function ends
   private
   def note_params

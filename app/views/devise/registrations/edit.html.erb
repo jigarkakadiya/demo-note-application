@@ -9,8 +9,8 @@
           status = true
         end
       %>
-      <h5>Note auto save is <a href="/application/change_autosave/<%= status %>"><input type="checkbox" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger" <%= if !status then "checked" end %>></a></h5>
-
+      <h5>Note auto save is <input type="checkbox" id="auto-save" data-status="<%= status %>" data-toggle="toggle" data-on="On" data-off="Off" data-onstyle="success" data-offstyle="danger" <%= if !status then "checked" end %>></h5>
+      <p>With auto save on, the note will be saved automatically after 5 seconds</p>
       </div>
   </div>
   <hr>
@@ -84,3 +84,21 @@
     <% end %>
   </div>
 </div>
+<script type="text/javascript">
+  $("#auto-save").change(function(){
+    status = $(this).data('status')
+    /*if(status){
+      interval = setInterval(do_autosave,5000);
+    }
+    else{
+      clearInterval(interval)
+    }*/
+    $.ajax({
+      url: "/application/change_autosave/" + status,
+      type: 'GET',
+      success:function(){
+        console.log('updated')
+      }//end of success function
+    });//end of ajax
+  });
+</script>
