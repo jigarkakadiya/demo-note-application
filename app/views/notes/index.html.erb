@@ -8,7 +8,7 @@
         <% end %>
       </div>
       <div class="col-6" align="right">
-        <%= link_to 'Add New Note', new_note_path ,remote: true, class: "btn btn-info" %>
+        <%= link_to 'Add New Note', new_note_path ,remote: true, class: "btn btn-info", id: :new_note %>
       </div>
   </div>
   <hr>
@@ -38,3 +38,13 @@
 </div>
 <!-- all modals -->
 <div class="modal fade" id="comment"></div>
+<script type="text/javascript">
+  $("a").click(function(){
+    alert(interval)
+    clearInterval(interval)
+  })
+  $("#new_note").click(function(){
+    flag = 0
+    $("#note_form").attr("method", "POST");
+  });
+</script>

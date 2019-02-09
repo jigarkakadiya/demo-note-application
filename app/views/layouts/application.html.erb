@@ -14,8 +14,7 @@
     <%= tinymce_assets %>
 
     <script type="text/javascript">
-      clearInterval()
-      var flag = 0
+      var flag = 0 , interval;
       function do_autosave()
       {
         var form_data = $("#note_form").serialize();
@@ -23,7 +22,6 @@
           type = "POST"
         else
           type = "PATCH"
-        //console.log()
         if($("#note_title").val().length > 0){
           $.ajax({
             type: type,

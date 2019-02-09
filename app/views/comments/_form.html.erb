@@ -14,7 +14,7 @@
       <input type="text" name="" value="<%= @note.title %>" disabled="true" class="form-control">
       <%= frm.hidden_field :note_id, value: @note.id %>
       Comments :
-      <%= frm.text_area :description, autocomplete: "current-password", class: "form-control tinymce", required: true  %>
+      <%= frm.text_area :description, autocomplete: "current-password", class: "form-control tinymce"  %>
     </div>
 
     <!-- Modal footer -->

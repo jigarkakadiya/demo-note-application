@@ -2,7 +2,6 @@
 class NotesController < ApplicationController
   def index
     @notes = Note.records
-    @comments = Comment.all
   end
 
   def new
@@ -12,11 +11,13 @@ class NotesController < ApplicationController
   def create
     @note = Note.new(note_params)
     @note.user_id = current_user.id
-    @note.save
-    @notes = Note.records
-    if current_user.do_autosave
-      render :json => { note_id: @note.id }
-    end
+    if @note.save
+      if current_user.do_autosave
+        render :json => { note_id: @note.id }
+      else
+        load_data
+      end
+    end #end of @note.save
   end
 
   def edit
@@ -29,15 +30,15 @@ class NotesController < ApplicationController
       if current_user.do_autosave
         render :json => { note_id: @note.id }
       else
-        @notes = Note.records
-      end
-    end #end of if @dept.update
+        load_data
+      end #end of if autosave on
+    end #end of @note.update
   end
 
   def destroy
     @note = Note.find(params[:id])
     if @note.update(is_active: false)
-      @notes = Note.records
+      load_data
     end #end of if @dept.delete
   end
 
@@ -62,6 +63,12 @@ class NotesController < ApplicationController
 
   def load_data
     @notes = Note.records
+    if !current_user.do_autosave
+      respond_to do |format|
+        @notes = Note.records
+        format.js { render 'notes/load_data.js.erb' }
+      end #end of respond_to
+    end #end of if
   end
   #custom function ends
   private

@@ -87,12 +87,6 @@
 <script type="text/javascript">
   $("#auto-save").change(function(){
     status = $(this).data('status')
-    /*if(status){
-      interval = setInterval(do_autosave,5000);
-    }
-    else{
-      clearInterval(interval)
-    }*/
     $.ajax({
       url: "/application/change_autosave/" + status,
       type: 'GET',
