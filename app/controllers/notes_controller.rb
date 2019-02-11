@@ -81,6 +81,8 @@ class NotesController < ApplicationController
     if @user.empty? #user is not registered
       @user = User.invite!({:email => user_email,:name => current_user.name})
     end
+    share_data = {}
+    @share = Share.create()
     return
   end
   #custom function ends
