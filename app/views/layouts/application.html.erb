@@ -4,13 +4,13 @@
     <title>NoteApplication</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="turbolinks-visit-control" content="reload">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <meta name="turbolinks-visit-control" content="reload">
-
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
     <%= tinymce_assets %>
 
     <script type="text/javascript">
@@ -22,6 +22,7 @@
           type = "POST"
         else
           type = "PATCH"
+        console.log(form_data)
         if($("#note_title").val().length > 0){
           $.ajax({
             type: type,
@@ -36,6 +37,15 @@
           });//end of ajax
         }//end of if
       }//end of do_autosave
+
+      $(document).ready(function(){
+        $("a").click(function(){
+          console.log("link clicked")
+          clearInterval(interval)
+        })
+
+        $("a").tooltip()
+      })
     </script>
 
   </head>

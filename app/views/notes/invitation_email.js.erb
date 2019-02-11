@@ -1,0 +1,3 @@
+$("#invitation_email").html("<%= escape_javascript(render partial: 'invitation_email' ) %>");
+$("#note_title").text("<%= @note.title %>")
+$("#invitation_email").modal("show")

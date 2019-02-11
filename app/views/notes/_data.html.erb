@@ -7,12 +7,17 @@
   <tr>
     <td>
         Title: <b><%= link_to note.title, note_comments_path(note.id), remote: :true , class: :link, action: :replace  %></b>&nbsp;
+        <%= link_to invitation_email_path(note.id), data: {remote: true}, title: "Share this note" do %>
+          <i class="fa fa-share-alt" style="float:right; color:#696969; font-size:20px"></i>
+        <% end %>
         <% if note.is_important then %>
           <%= link_to change_importance_path(note.id, 'false'), data: {remote: true} do %>
             <i class="fa fa-heart" style="float:right; color:#ff0000; font-size:20px"></i>
           <% end %>
         <% else %>
-          <a href="/notes/change_importance/<%= note.id%>/true" data-remote="true"><i class="fa fa-heart" style="float:right; color:#696969; font-size:20px"></i></a>
+          <%= link_to change_importance_path(note.id, 'true'), data: {remote: true} do %>
+            <i class="fa fa-heart" style="float:right; color:#696969; font-size:20px"></i>
+          <% end %>
         <% end %><br>
         <%= link_to 'Edit' , edit_note_path(note.id), remote: :true, class: :link, action: :replace %> |
         <%= link_to 'Delete', note_path(note), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' }, class: :link %> |

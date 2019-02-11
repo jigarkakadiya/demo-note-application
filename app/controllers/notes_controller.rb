@@ -44,7 +44,7 @@ class NotesController < ApplicationController
 
   #custome functions starts
   def search_note
-    #@notes = Note.where("title LIKE ? or description LIKE ? and is_active = ?","#{params[:search]}%","#{params[:search]}%",true)
+    #@notes = Note.where("title LIKE :value or description LIKE :value and is_active = true",{value: :params[:search]})
     content = params[:search]
     if content.nil? || content == ""
       @notes =  Note.records
@@ -69,6 +69,19 @@ class NotesController < ApplicationController
         format.js { render 'notes/load_data.js.erb' }
       end #end of respond_to
     end #end of if
+  end
+
+  def invitation_email
+    @note = Note.find(params[:id])
+  end
+
+  def check_email
+    user_email = params[:user_email]
+    @user = User.where("email = ?",user_email)
+    if @user.empty? #user is not registered
+      @user = User.invite!({:email => user_email,:name => current_user.name})
+    end
+    return
   end
   #custom function ends
   private
