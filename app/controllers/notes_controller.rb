@@ -71,20 +71,6 @@ class NotesController < ApplicationController
     end #end of if
   end
 
-  def invitation_email
-    @note = Note.find(params[:id])
-  end
-
-  def check_email
-    user_email = params[:user_email]
-    @user = User.where("email = ?",user_email)
-    if @user.empty? #user is not registered
-      @user = User.invite!({:email => user_email,:name => current_user.name})
-    end
-    share_data = {}
-    @share = Share.create()
-    return
-  end
   #custom function ends
   private
   def note_params

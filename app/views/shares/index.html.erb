@@ -1,0 +1,28 @@
+<div class="col-lg-12" style="background-color: #e9ecef">
+  <br>
+  <div class="row">
+      <div class="col-lg-6" style="padding-left: 35px; border: 0px solid">
+        <%= form_tag({controller: "notes", action: "search_note"}, method: "post", class: "form-inline", remote: true) do %>
+            <input type="text" name="search" value="" placeholder="Start Your Search" class="form-control" id="search">&nbsp;&nbsp;
+            <input type="submit" name="submit" value="Search" class="btn btn-info">
+        <% end %>
+      </div>
+  </div>
+  <hr>
+</div>
+<div class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-12">
+      <%# @user_notes.each do |note| %>
+        <div class="col-lg-3">
+          <div class="card bg-light">
+            <div class="card-body text-center">
+              <h4 class="card-title"><%# note.note_id %></h4>
+              <p class="card-text">Some text inside the fifth card</p>
+            </div>
+          </div>
+        </div>
+      <%# end %>
+    </div>
+  </div>
+</div>

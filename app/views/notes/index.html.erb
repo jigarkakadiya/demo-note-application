@@ -15,6 +15,16 @@
 </div>
 <div class="col-lg-12">
   <div class="row">
+    <div class="col-lg-12">
+      <div class="alert alert-dismissible">
+        <button type="button" class="close">&times;</button>
+        <span id="msg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-lg-12">
+  <div class="row">
     <div class="col-lg-3">
       <center><h4>Your Recent Notes</h4><center>
     </div>
@@ -38,10 +48,15 @@
 </div>
 <!-- all modals -->
 <div class="modal fade" id="comment"></div>
-<div class="modal fade" id="invitation_email">-</div>
+<div class="modal fade" id="invitation_email"></div>
+
 <script type="text/javascript">
   $("#new_note").click(function(){
     flag = 0
     $("#note_form").attr("method", "POST");
   });
+  $(".alert").hide()
+  $(".close").click(function(){
+    $(".alert").slideUp()
+  })
 </script>

@@ -3,6 +3,7 @@ class Note < ApplicationRecord
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
   belongs_to :user
+  has_many :shares
   has_many :comments
   searchkick
   acts_as_taggable

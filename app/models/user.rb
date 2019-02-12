@@ -5,5 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable, :invitable
   has_many :notes
   has_many :comments
+  has_many :shares, :through => :notes
   has_one_attached :profile_photo
 end
