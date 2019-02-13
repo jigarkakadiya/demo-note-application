@@ -75,4 +75,3 @@ gem 'letter_opener'
 gem 'acts-as-taggable-on', '~> 6.0'
 gem "font-awesome-rails"
 gem 'tinymce-rails'
-gem 'devise_invitable'

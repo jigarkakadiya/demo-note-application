@@ -92,9 +92,6 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
-    devise_invitable (1.7.5)
-      actionmailer (>= 4.1.0)
-      devise (>= 4.0.0)
     elasticsearch (6.1.0)
       elasticsearch-api (= 6.1.0)
       elasticsearch-transport (= 6.1.0)
@@ -267,7 +264,6 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   devise
-  devise_invitable
   elasticsearch-model
   elasticsearch-rails
   font-awesome-rails

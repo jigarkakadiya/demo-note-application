@@ -1,7 +1,7 @@
 #/usr/local/bin/elasticsearch
 class NotesController < ApplicationController
   def index
-    @notes = Note.records
+    @notes = current_user.notes
   end
 
   def new
@@ -47,7 +47,7 @@ class NotesController < ApplicationController
     #@notes = Note.where("title LIKE :value or description LIKE :value and is_active = true",{value: :params[:search]})
     content = params[:search]
     if content.nil? || content == ""
-      @notes =  Note.records
+      @notes =  current_user.notes
     else
       taged_note = Note.tagged_with(content)
       searched_note = Note.search(content)
@@ -58,14 +58,13 @@ class NotesController < ApplicationController
   def change_importance
     @note = Note.find(params[:id])
     @note.update(is_important: params[:status])
-    @notes = Note.records
+    @notes = current_user.notes
   end
 
   def load_data
-    @notes = Note.records
+    @notes = current_user.notes
     if !current_user.do_autosave
       respond_to do |format|
-        @notes = Note.records
         format.js { render 'notes/load_data.js.erb' }
       end #end of respond_to
     end #end of if
