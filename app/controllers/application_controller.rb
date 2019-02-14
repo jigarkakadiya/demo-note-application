@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
     current_user.update(do_autosave: params[:status])
     current_user.do_autosave = params[:status]
   end
+
+
+
   protected
   def configure_permitted_parameters
     added_attrs = [:name, :contact, :email, :password, :password_confirmation, :remember_me, :profile_photo]

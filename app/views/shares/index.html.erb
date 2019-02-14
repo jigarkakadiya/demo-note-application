@@ -24,29 +24,41 @@
       <div class="tab-content">
         <br>
         <div class="tab-pane container active col-lg-12" id="shared_to_me" style="border:0px solid">
+          <div class="row">
           <% @shared_notes_with_me.each do |note| %>
             <div class="col-lg-3">
               <div class="card bg-light">
                 <div class="card-body text-center">
                   <h4 class="card-title"><%= note.title %></h4>
-                  <p class="card-text"><%= note.description.html_safe %></p>
-                  <p>Shared By : <%= note.user.name %></p>
+                  <p class="card-text">Shared By : <%= note.user.name %></p>
+                  <p>permission:
+                      <% if note.permission_id==1 then %>
+                            Can View
+                      <% elsif note.permission_id==2 then %>
+                            Edit
+                      <% else %>
+                           Owner
+                      <% end %>
+                  </p>
                 </div>
               </div>
             </div>
           <% end %>
+          </div>
         </div>
         <div class="tab-pane container fade col-lg-12" id="shared_by_me">
-          <% @shared_notes_by_me.each do |note| %>
-          <div class="col-lg-3">
-            <div class="card bg-light">
-              <div class="card-body text-center">
-                <h4 class="card-title"><%= note.title %></h4>
-                <p class="card-text"><%= note.description.html_safe %></p>
+          <div class="row">
+            <%# @shared_notes_by_me.each do |note| %>
+            <div class="col-lg-3">
+              <div class="card bg-light">
+                <div class="card-body text-center">
+                  <h4 class="card-title"><%# note.title %></h4>
+                  <p class="card-text"><%# note.description.html_safe %></p>
+                </div>
               </div>
             </div>
+            <%# end %>
           </div>
-          <% end %>
         </div>
       </div>
     </div>

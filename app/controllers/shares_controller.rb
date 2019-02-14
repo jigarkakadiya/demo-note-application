@@ -1,8 +1,9 @@
 class SharesController < ApplicationController
   def index
     #@shared_notes_by_me = current_user.shared_notes
-    @shared_notes_by_me = current_user.notes_shared_by_me
-    @shared_notes_with_me = current_user.notes_shared_with_me
+    #@shared_notes_by_me = current_user.notes_shared_by_me.uniq
+    @shared_notes_with_me = current_user.notes_shared_with_me    
+    #render plain: @shared_notes_with_me.inspect
   end
 
   def new
@@ -14,7 +15,11 @@ class SharesController < ApplicationController
     user_email = params[:share][:email]
     @user = User.where("email = ?",user_email).first
     if @user.nil? #user is not registered
-    #  @user = User.invite!({:email => user_email,:name => current_user.name})
+      UserMailer.invitation_mail(user_email,current_user.name).deliver_now
+      @name = user_email
+    else
+      @name = @user.name
+      UserMailer.shared_note_mail(user_email,current_user.name,@name).deliver_now
     end
     @share = Share.new(share_data)
     @share.shared_by = current_user.id

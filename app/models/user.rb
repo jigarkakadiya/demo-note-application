@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_one_attached :profile_photo
 
   def notes_shared_with_me
-    Note.joins(:shares).where(shares: {email: self.email})
+    Note.joins(:shares).where(shares: {email: self.email}).select("*")
   end
 
   def notes_shared_by_me

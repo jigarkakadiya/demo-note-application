@@ -1,10 +1,10 @@
 if("<%= @flag %>" == "Y"){
   $(".alert").addClass("alert-success")
-  msg = "Note was shared with <%= @user.name %>"
+  msg = "Note was shared with <%= @name %>"
 }
 else{
   $(".alert").addClass("alert-danger")
-  msg = "Note was not shared with <%= @user.name %>"
+  msg = "Note was not shared with <%= @name %>"
 }
 $("#msg").text(msg)
 $("#invitation_email").modal("hide")
