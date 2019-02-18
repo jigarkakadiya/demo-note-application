@@ -1,7 +1,7 @@
 #/usr/local/bin/elasticsearch
 class NotesController < ApplicationController
   def index
-    @notes = current_user.notes
+    @notes = current_user.notes.where("is_active = true").where("is_active = true")
   end
 
   def new
@@ -15,6 +15,7 @@ class NotesController < ApplicationController
       if current_user.do_autosave
         render :json => { note_id: @note.id }
       else
+        @msg = "New Note Added"
         load_data
       end
     end #end of @note.save
@@ -30,6 +31,7 @@ class NotesController < ApplicationController
       if current_user.do_autosave
         render :json => { note_id: @note.id }
       else
+        @msg = "Note Updated"
         load_data
       end #end of if autosave on
     end #end of @note.update
@@ -38,6 +40,7 @@ class NotesController < ApplicationController
   def destroy
     @note = Note.find(params[:id])
     if @note.update(is_active: false)
+      @msg = "Note Deleted"
       load_data
     end #end of if @dept.delete
   end
@@ -47,24 +50,25 @@ class NotesController < ApplicationController
     #@notes = Note.where("title LIKE :value or description LIKE :value and is_active = true",{value: :params[:search]})
     content = params[:search]
     if content.nil? || content == ""
-      @notes =  current_user.notes
+      @notes =  current_user.notes.where("is_active = true")
     else
-      taged_note = Note.tagged_with(content)
-      searched_note = Note.search(content)
-      @notes = taged_note + searched_note
+      tagged_note = Note.tagged_with(content).where("is_active = true")
+      searched_note = Note.search(content).where("is_active = true")
+      @notes = tagged_note + searched_note
     end
   end
 
   def change_importance
     @note = Note.find(params[:id])
     @note.update(is_important: params[:status])
-    @notes = current_user.notes
+    @notes = current_user.notes.where("is_active = true")
   end
 
   def load_data
-    @notes = current_user.notes
+    @notes = current_user.notes.where("is_active = true")
     if !current_user.do_autosave
       respond_to do |format|
+        @flag = '1'
         format.js { render 'notes/load_data.js.erb' }
       end #end of respond_to
     end #end of if

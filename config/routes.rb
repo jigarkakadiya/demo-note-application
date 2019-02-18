@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   post 'notes/search_note', to: "notes#search_note", as: :search_note
   get 'application/change_autosave/:status', to: "application#change_autosave", as: :change_autosave
   get 'notes/load_data', to: "notes#load_data", as: :load_data
+  get 'shares/shared_notes_with_me', to: "shares#shared_notes_with_me", as: :shared_notes_with_me
+  get 'shared/shared_notes_by_me', to: "shares#shared_notes_by_me", as: :shared_notes_by_me
+  get 'shared/ask_for_permission/:id/:owner/:note/:email', to: "shares#ask_for_permission", as: :ask_for_permission
+  get 'shared/change_note_permission/:id', to: "shares#change_note_permission", as: :change_note_permission
   devise_for :users, controllers: { confirmations: 'confirmations' }
   resources :notes do
     resources :comments

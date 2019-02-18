@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :confirmable
   has_many :notes
   has_many :comments
-  has_many :shares, class_name: "Share", foreign_key: "shared_by"
+  has_many :shares
+  has_many :shares, foreign_key: :email
   has_many :shared_notes, :through => :shares, :source => :note
   has_one_attached :profile_photo
 

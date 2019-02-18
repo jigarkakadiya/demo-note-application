@@ -42,21 +42,11 @@
     </div>
 
     <div class="col-lg-9" style="border: 0px solid; padding-right: 20px" id="note_comment">
-
+      <%= render 'info' %>
     </div>
   </div>
 </div>
 <!-- all modals -->
 <div class="modal fade" id="comment"></div>
 <div class="modal fade" id="invitation_email"></div>
-
-<script type="text/javascript">
-  $("#new_note").click(function(){
-    flag = 0
-    $("#note_form").attr("method", "POST");
-  });
-  $(".alert").hide()
-  $(".close").click(function(){
-    $(".alert").slideUp()
-  })
-</script>
+<%= javascript_include_tag 'note', 'data-turbolinks-track': 'reload' %>

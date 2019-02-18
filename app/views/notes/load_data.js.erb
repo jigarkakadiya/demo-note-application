@@ -1,1 +1,13 @@
-$("#notes").html("<%= escape_javascript(render partial: 'data' ) %>");
+console.log('load data')
+$("#shared_to_me").removeClass("active")
+$("#shared_by_me").addClass("active")
+$("a").tooltip()
+$("#notes").html("<%= escape_javascript(render partial: 'notes/data' ) %>");
+if(<%= @flag %>==1)
+{
+  $(".modal-title1").text("")
+  $("#note_comment").html("<%= escape_javascript(render partial: 'notes/info' ) %>")
+}
+$(".alert").addClass("alert-success")
+$("#msg").text("<%= @msg %>")
+$(".alert").slideDown()

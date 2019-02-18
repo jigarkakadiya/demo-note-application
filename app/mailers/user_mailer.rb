@@ -9,4 +9,12 @@ class UserMailer < ApplicationMailer
     @name = name
     mail(to: user_mail,subject: "New Shared Note")
   end
+
+  def permission_mail(asker_name,shares_id,owner_name,note_name,owner_email)
+    @asker_name = asker_name
+    @shares_id = shares_id
+    @owner_name = owner_name
+    @note_name = note_name
+    mail(to: owner_email,subject: "Permission Requested")
+  end
 end

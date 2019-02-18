@@ -1,0 +1,40 @@
+<br>
+<div class="col-lg-12">
+  <div class="card-deck">
+    <div class="card bg-info">
+      <div class="card-body text-center">
+        <p class="card-text">
+          <b style="font-size:25px"><center><%= current_user.notes.count %></center></b>
+          <b>Total notes</b>
+        </p>
+      </div>
+    </div>
+
+    <div class="card bg-info">
+      <div class="card-body text-center">
+        <p class="card-text">
+          <b style="font-size:25px"><center><%= current_user.notes_shared_by_me.uniq.count %></center></b>
+          <b>Total Notes Shared By You</b>
+        </p>
+      </div>
+    </div>
+
+    <div class="card bg-info">
+      <div class="card-body text-center">
+        <p class="card-text">
+          <b style="font-size:25px"><center><%= current_user.notes_shared_with_me.count %></center></b>
+          <b>Total Notes Shared To You</b>
+        </p>
+      </div>
+    </div>
+
+    <div class="card bg-info">
+      <div class="card-body text-center">
+        <p class="card-text">
+          <b style="font-size:25px"><center><%= current_user.comments.count %></center></b>
+          <b>Total Comments By You</b>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

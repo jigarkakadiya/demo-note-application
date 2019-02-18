@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-12">
-    <div class="row">
-      <div class="col-lg-6">
+    <div class="row" style="border:0px solid">
+      <div class="col-lg-10" style="border:0px solid">
         <h5><u><b><%= @note.title %></b></u></h5>
         <% if @note.is_important then %>
           <p class="badge badge-success">Marked As Important</p>
@@ -18,8 +18,21 @@
         <% end %><br><br>
         <u>Note Owner : <%= @note.user.name %></u><br>
       </div>
-      <div class="col-lg-6" align="right">
-        <%= link_to 'Add New Comment', new_note_comment_path(@note), remote: :true, class: "btn btn-info" %>
+      <div class="col-lg-2" align="right">
+          <center><%= link_to 'Add New Comment', new_note_comment_path(@note), remote: :true, class: "btn btn-info" %></center>
+          <b>This note is shared to</b>
+          <table class="table table-stripped table-bordered">
+            <% if @note.shared_users.empty? %>
+            <tr>
+              <td class="msg">No Shares</td>
+            </tr>
+            <% end %>
+            <% @note.shared_users.each do |user| %>
+            <tr>
+              <td><%= user.email %><br></td>
+            </tr>
+            <% end %>
+          </table>
       </div>
     </div>
   </div>
@@ -35,8 +48,10 @@
           <b><%= if comment.user.name==current_user.name then "You" else comment.user.name end %></b>&nbsp; commented on &nbsp; <b><%= comment.created_at.strftime("%d-%m-%Y") %></b>
         </div>
         <div class="col-lg-6" align="right">
-          <%= link_to 'Edit' , edit_note_comment_path(@note,comment), remote: :true, class: :link %> |
-          <%= link_to 'Delete', note_comment_path(@note,comment), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' }, class: :link %>
+          <% if can? :manage,comment %>
+            <%= link_to 'Edit' , edit_note_comment_path(@note,comment), remote: :true, class: :link %> |
+            <%= link_to 'Delete', note_comment_path(@note,comment), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' }, class: :link %>
+          <% end %>
         </div>
       </div>
       <div class="row">

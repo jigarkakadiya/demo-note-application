@@ -16,5 +16,8 @@ class Note < ApplicationRecord
   def self.records
     return Note.where("is_active = true")
   end
+  def shared_users
+    Share.where(note_id: self.id)
+  end
 end
 Note.import
