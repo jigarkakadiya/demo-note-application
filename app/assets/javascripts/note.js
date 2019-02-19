@@ -8,6 +8,8 @@ function do_autosave()
     type = "POST"
   else
     type = "PATCH"
+  tinymce.triggerSave();
+  console.log(form_data)
   if($("#note_title").val().length > 0){
     $.ajax({
       type: type,
@@ -20,6 +22,9 @@ function do_autosave()
         msg = "Note Saved"
         $("#msg").text(msg)
         $(".alert").slideDown()
+        setTimeout(function() {
+            $(".alert").slideUp()
+        }, 2000);
         $.ajax("/notes/load_data")
         flag = 1
       }

@@ -1,7 +1,7 @@
 #/usr/local/bin/elasticsearch
 class NotesController < ApplicationController
   def index
-    @notes = current_user.notes.where("is_active = true").where("is_active = true")
+    @notes = current_user.my_notes
   end
 
   def new
@@ -50,10 +50,10 @@ class NotesController < ApplicationController
     #@notes = Note.where("title LIKE :value or description LIKE :value and is_active = true",{value: :params[:search]})
     content = params[:search]
     if content.nil? || content == ""
-      @notes =  current_user.notes.where("is_active = true")
+      @notes =  current_user.my_notes
     else
-      tagged_note = Note.tagged_with(content).where("is_active = true")
-      searched_note = Note.search(content).where("is_active = true")
+      tagged_note = current_user.my_notes.tagged_with(content).where("is_active = true")
+      searched_note = current_user.my_notes.search(content).where("is_active = true")
       @notes = tagged_note + searched_note
     end
   end
@@ -61,11 +61,12 @@ class NotesController < ApplicationController
   def change_importance
     @note = Note.find(params[:id])
     @note.update(is_important: params[:status])
-    @notes = current_user.notes.where("is_active = true")
+    @msg = "Note Importance Changed"
+    load_data
   end
 
   def load_data
-    @notes = current_user.notes.where("is_active = true")
+    @notes = current_user.my_notes
     if !current_user.do_autosave
       respond_to do |format|
         @flag = '1'

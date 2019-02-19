@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   get 'shared/shared_notes_by_me', to: "shares#shared_notes_by_me", as: :shared_notes_by_me
   get 'shared/ask_for_permission/:id/:owner/:note/:email', to: "shares#ask_for_permission", as: :ask_for_permission
   get 'shared/change_note_permission/:id', to: "shares#change_note_permission", as: :change_note_permission
-  devise_for :users, controllers: { confirmations: 'confirmations' }
+
+  devise_for :users, controllers: { confirmations: 'confirmations', omniauth_callbacks: 'omniauth_callbacks' }
   resources :notes do
     resources :comments
   end

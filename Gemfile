@@ -76,3 +76,6 @@ gem 'acts-as-taggable-on', '~> 6.0'
 gem "font-awesome-rails"
 gem 'tinymce-rails'
 gem 'cancancan', '~> 2.0'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem 'google-api-client', '0.9.1', require: 'google/apis/calendar_v3'

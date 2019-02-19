@@ -1,7 +1,8 @@
 console.log('load data')
 $("#shared_to_me").removeClass("active")
 $("#shared_by_me").addClass("active")
-$("a").tooltip()
+$("a").tooltip("hide")
+$("#notes").empty()
 $("#notes").html("<%= escape_javascript(render partial: 'notes/data' ) %>");
 if(<%= @flag %>==1)
 {
