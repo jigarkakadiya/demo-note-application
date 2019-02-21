@@ -7,9 +7,9 @@ class Note < ApplicationRecord
   acts_as_taggable
 
   belongs_to :user
-  has_many :shares
+  has_many :shares, dependent: :destroy
   has_many :shared_by_users, through: :shares, source: :user
-  has_many :comments
+  has_many :comments, dependent: :destroy
   acts_as_taggable_on :tags
 
   Note.reindex

@@ -322,7 +322,7 @@ DEPENDENCIES
   elasticsearch-model
   elasticsearch-rails
   font-awesome-rails
-  google-api-client (= 0.9.1)
+  google-api-client
   jbuilder (~> 2.5)
   jquery-rails
   letter_opener

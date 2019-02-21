@@ -1,0 +1,54 @@
+<div class="col-lg-12" style="background-color: #e9ecef">
+  <br>
+  <div class="row">
+      <div class="col-lg-6" style="padding-left: 35px; border: 0px solid">
+        <h3>Your Calendars</h3>
+      </div>
+      <div class="col-6" align="right">
+        <%= link_to 'Add New Event To Calendar', new_note_path ,remote: true, class: "btn btn-info", id: :new_note %>
+      </div>
+  </div>
+  <hr>
+</div>
+<div class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="alert alert-dismissible">
+        <button type="button" class="close">&times;</button>
+        <span id="msg"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-3">
+      <center><h4>Your Google Calendar</h4><center>
+    </div>
+    <div class="col-lg-9">
+      <h4 class="modal-title1"></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3" style="border: 0px solid;height:500px; overflow: scroll;">
+      <table class="table table-bordered table-striped" style="padding: 25px; width:90% !important" align="center">
+        <tbody id="calendars">
+            <% @calendar_list.items.each do |calendar| %>
+            <tr>
+              <th><%# calendar.inspect %></th>
+              <th><%= link_to calendar.summary , calendar_events_path(calendar.id), class: :link, remote: true %></th>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-lg-9" style="border: 0px solid; padding-right: 20px" id="calendar_event">
+      <%= render 'info' %>
+    </div>
+  </div>
+</div>
+<!-- all modals -->
+<div class="modal fade" id="comment"></div>
+<div class="modal fade" id="invitation_email"></div>
+<%= javascript_include_tag 'note', 'data-turbolinks-track': 'reload' %>

@@ -11,7 +11,7 @@ class SharesController < ApplicationController
     @deactive = "shared_by_me"
     respond_to do |format|
       format.js { render 'load_data.js.erb' }
-    end #end of respond_to
+    end 
   end
 
   def shared_notes_by_me

@@ -1,0 +1,7 @@
+<table class="table table-bordered table-striped">
+  <% @event_list.items.each do |event| %>
+  <tr>
+    <td><%= event.summary %> (<%= event.id %>)</td>
+  </tr>
+  <% end %>
+</table>
