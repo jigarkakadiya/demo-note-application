@@ -5,7 +5,7 @@
         <h3>Your Calendars</h3>
       </div>
       <div class="col-6" align="right">
-        <%= link_to 'Add New Event To Calendar', new_note_path ,remote: true, class: "btn btn-info", id: :new_note %>
+        <%= link_to 'Add New Event To Calendar', new_event_path ,remote: true, class: "btn btn-info" %>
       </div>
   </div>
   <hr>
@@ -35,7 +35,6 @@
         <tbody id="calendars">
             <% @calendar_list.items.each do |calendar| %>
             <tr>
-              <th><%# calendar.inspect %></th>
               <th><%= link_to calendar.summary , calendar_events_path(calendar.id), class: :link, remote: true %></th>
             </tr>
             <% end %>
@@ -49,6 +48,8 @@
   </div>
 </div>
 <!-- all modals -->
-<div class="modal fade" id="comment"></div>
-<div class="modal fade" id="invitation_email"></div>
-<%= javascript_include_tag 'note', 'data-turbolinks-track': 'reload' %>
+<div class="modal fade" id="add_event"></div>
+<div class="modal fade" id="edit_event"></div>
+<script type="text/javascript">
+  $(".alert").hide()
+</script>

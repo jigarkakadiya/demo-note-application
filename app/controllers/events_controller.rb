@@ -1,84 +1,45 @@
 class EventsController < ApplicationController
   def index
-    #render plain: current_user.access_token.inspect
-    #return
-    client = Signet::OAuth2::Client.new(client_options)
-    client.update!(
-      :code => current_user.refresh_token,
-      :access_token => current_user.access_token,
-      :expires_in => current_user.expires_at
-    )
-
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
-
-    @calendar_list = service.list_calendar_lists
-    rescue Google::Apis::AuthorizationError
-    response = client.refresh!
-
-    session[:authorization] = session[:authorization].merge(response)
-
-    retry
-  end
-
-  def new
+    calendar = get_calendar
+    @calendar_list = calendar.list_calendar_lists
   end
 
   def create
-    #render plain: params.inspect
-    client = Signet::OAuth2::Client.new(client_options)
-    client.update!(
-      :code => current_user.refresh_token,
-      :access_token => current_user.access_token,
-      :expires_in => current_user.expires_at
-    )
-
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
-
-    event = Google::Apis::CalendarV3::Event.new({
-      start: Google::Apis::CalendarV3::EventDateTime.new(date: params[:event_start_date]),
-      end: Google::Apis::CalendarV3::EventDateTime.new(date: params[:event_end_date]),
-      summary: params[:event_name]
-    })
-    service.insert_event("primary", event)
-    render plain: "Event Added"
+    calendar = get_calendar
+    event = get_event
+    calendar.insert_event("primary", event)
+    @event_list = get_calendar_events("primary")
+    respond_to do |format|
+      format.js { render 'calendar_events.js.erb' }
+    end
   end
 
-  def change
-
+  def edit
+    calendar = get_calendar
+    @calendar_id = params[:calendar_id]
+    @id = params[:id]
+    @event = calendar.get_event(@calendar_id,@id)
   end
 
   def update
-
+    calendar = get_calendar
+    event = get_event
+    @calendar_id = params[:calendar_id]
+    @event_id = params[:event_id]
+    calendar.update_event(@calendar_id,@event_id,event)
+    render plain: "Event Updated"
   end
+
+  def destroy
+    calendar = get_calendar
+    @calendar_id = params[:calendar_id]
+    @event_id = params[:id]
+    calendar.delete_event(@calendar_id,@event_id)
+    render plain: "Event Deleted"
+  end
+
   def calendar_events
-=begin
-    client = Signet::OAuth2::Client.new(client_options)
-    client.update!(session[:authorization])
-
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
-
-    @calendar_list = service.list_calendar_lists
-  rescue Google::Apis::AuthorizationError
-    response = client.refresh!
-
-    session[:authorization] = session[:authorization].merge(response)
-
-    retry
-=end
-    client = Signet::OAuth2::Client.new(client_options)
-    client.update!(
-      :code => current_user.refresh_token,
-      :access_token => current_user.access_token,
-      :expires_in => current_user.expires_at
-    )
-
-    service = Google::Apis::CalendarV3::CalendarService.new
-    service.authorization = client
-
-    @event_list = service.list_events(params[:calendar_id])
+    @event_list = get_calendar_events(params[:calendar_id])
   end
 
   private
@@ -91,5 +52,33 @@ class EventsController < ApplicationController
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
       redirect_uri: application_dashboard_url
     }
+  end
+
+  def get_calendar
+    client = Signet::OAuth2::Client.new(client_options)
+    client.update!(
+      :code => current_user.refresh_token,
+      :access_token => current_user.access_token,
+      :expires_in => current_user.expires_at
+    )
+    calendar = Google::Apis::CalendarV3::CalendarService.new
+    calendar.authorization = client
+    return calendar
+  end
+
+  def get_event
+    event = Google::Apis::CalendarV3::Event.new({
+      start: Google::Apis::CalendarV3::EventDateTime.new(date: params[:event_start_date]),
+      end: Google::Apis::CalendarV3::EventDateTime.new(date: params[:event_end_date]),
+      summary: params[:event_name],
+      description: params[:event_description]
+    })
+    return event
+  end
+
+  def get_calendar_events(calendar_id)
+    calendar = get_calendar
+    event_list = calendar.list_events(calendar_id)
+    return event_list
   end
 end

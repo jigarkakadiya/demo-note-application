@@ -1,0 +1,31 @@
+<!-- The Modal -->
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Change Event</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <!-- Modal body -->
+      <%= form_tag({controller: "events", action: "update"}, method: "patch",local: true) do %>
+      <div class="modal-body">
+        <input type="hidden" name="calendar_id" value="<%= @calendar_id %>">
+        <input type="hidden" name="event_id" value="<%= @id %>">
+        Event Title :
+        <input type="text" name="event_name" value="<%= @event.summary %>" class="form-control">
+        Event Description :
+        <textarea name="event_description" rows="8" cols="80" class="form-control"><%= @event.description %></textarea>
+        Event Start Date :
+        <input type="date" name="event_start_date" value="<%= @event.start.date %>" class="form-control"><br>
+        Event End Date :
+        <input type="date" name="event_end_date" value="<%= @event.end.date %>" class="form-control"><br>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <input type="submit" name="" value="Edit Event" class="btn btn-info">
+        <input type="reset" name="" value="Cancel" class="btn btn-default" data-dismiss="modal">
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
