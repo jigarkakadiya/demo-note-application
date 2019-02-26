@@ -17,18 +17,30 @@ class User < ApplicationRecord
   #
   ## Associations
   #
-  has_many :notes, dependent: :destroy
-  has_many :comments, dependent: :destroy
-  has_many :shares, dependent: :destroy
-  has_many :shares, foreign_key: :email
-  has_many :events, dependent: :destroy
+  has_many(
+    :notes,
+    dependent: :destroy
+  )
+  has_many(
+    :comments,
+    dependent: :destroy
+  )
+  has_many(
+    :shares,
+    dependent: :destroy,
+    foreign_key: :email
+  )
   has_many(
     :shared_notes,
     through: :shares,
-    source: :note
-  )
+    source: :note,
+    dependent: :destroy
+  ) #will get all the shared note by the user
   has_one_attached :profile_photo
 
+  #
+  ## Custom methods
+  #
   def notes_shared_with_me
     Note.joins(:shares).where(shares: {email: self.email}).select("*")
   end
@@ -45,8 +57,6 @@ class User < ApplicationRecord
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0,20]
-      #user.name = auth.info.name   # assuming the user model has a name
-      #user.image = auth.info.image # assuming the user model has an image
     end
   end
 
@@ -57,9 +67,5 @@ class User < ApplicationRecord
       user.name = provider_data.info.name
       user.skip_confirmation!
     end
-  end
-
-  def expired?
-    expire_at < Time.current.to_i
   end
 end

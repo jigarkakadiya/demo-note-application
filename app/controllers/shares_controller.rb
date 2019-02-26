@@ -1,8 +1,9 @@
 class SharesController < ApplicationController
   #load_and_authorize_resource
   def index
-    @notes = current_user.notes_shared_with_me
-    #render plain: @shared_notes_with_me.title.inspect
+    @notes = Share.where(email: current_user.email)
+    #@notes = current_user.notes_shared_with_me
+    #render plain: @notes.inspect
   end
 
   def shared_notes_with_me
@@ -11,7 +12,7 @@ class SharesController < ApplicationController
     @deactive = "shared_by_me"
     respond_to do |format|
       format.js { render 'load_data.js.erb' }
-    end 
+    end
   end
 
   def shared_notes_by_me
@@ -55,11 +56,12 @@ class SharesController < ApplicationController
   end
 
   def ask_for_permission
-    asker_name = current_user.name
-    owner_name = params[:owner]
     shares_id = params[:id]
-    note_name = params[:note]
-    owner_email = params[:email]
+    share = Share.find_by(id: shares_id)
+    owner_email = share.email
+    owner_name = User.find_by(id: share.shared_by).name
+    note_name = Note.find_by(id: share.note_id)
+    asker_name = current_user.name
     UserMailer.permission_mail(asker_name,shares_id,owner_name,note_name,owner_email).deliver_now
   end
 

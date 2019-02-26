@@ -1,7 +1,7 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # google callback
   def google_oauth2
-    auth = request.env['omniauth.auth']    
+    auth = request.env['omniauth.auth']
     @user = User.create_from_google_data(auth)
     @user.access_token = auth.credentials.token
     @user.expires_at = auth.credentials.expires_at

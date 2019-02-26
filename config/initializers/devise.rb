@@ -336,6 +336,9 @@ Devise.setup do |config|
   #   include Turbolinks::Controller
   # end
   config.omniauth :google_oauth2, "958955211976-g1gvcl9c7a7hhqt1golsp4q56bcjhc0u.apps.googleusercontent.com", "DBx45uuwyHqCwHF3rZDU1WoB",
-  { access_type: "offline", approval_prompt: "concent",
-  scope: 'userinfo.email,calendar' }
+  {
+    access_type: "offline",
+    prompt: "",
+    scope: 'userinfo.email,calendar'
+  }
 end

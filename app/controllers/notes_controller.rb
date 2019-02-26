@@ -1,5 +1,7 @@
 #/usr/local/bin/elasticsearch
 class NotesController < ApplicationController
+  require 'Calendar'
+  include Calendar
   def index
     @notes = current_user.my_notes
   end
@@ -15,10 +17,29 @@ class NotesController < ApplicationController
       if current_user.do_autosave
         render :json => { note_id: @note.id }
       else
-        @msg = "New Note Added"
+        if params[:note][:do_remind] == true
+          #render plain: "In if"
+          reminder_date = params[:note][:remind_date]
+          calendar = get_calendar
+          event = get_event(params[:note][:title],"Event Created From NoteMe",reminder_date,reminder_date)
+          calendar.insert_event("primary", event)
+
+          reminder = Reminder.new
+          reminder.note_id = @note.id
+          reminder.user_id = current_user.id
+          reminder.remind_date = reminder_date
+          if reminder.save
+            @msg = "Note saved with reminder in Google Calendar"
+          else
+            @msg = "Note saved without reminder in Google Calendar"
+          end
+        else
+          #render plain: "In else"
+          @msg = "New Note Added"
+        end
         load_data
       end
-    end #end of @note.save
+    end
   end
 
   def edit
@@ -33,8 +54,8 @@ class NotesController < ApplicationController
       else
         @msg = "Note Updated"
         load_data
-      end #end of if autosave on
-    end #end of @note.update
+      end
+    end
   end
 
   def destroy
@@ -42,7 +63,7 @@ class NotesController < ApplicationController
     if @note.update(is_active: false)
       @msg = "Note Deleted"
       load_data
-    end #end of if @dept.delete
+    end
   end
 
   #custome functions starts
@@ -71,8 +92,8 @@ class NotesController < ApplicationController
       respond_to do |format|
         @flag = '1'
         format.js { render 'notes/load_data.js.erb' }
-      end #end of respond_to
-    end #end of if
+      end
+    end
   end
 
   #custom function ends

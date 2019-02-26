@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
     @comments = @note.comments.paginate(:page => params[:page], :per_page => 5)
     @shared_user = ""
   end
+  
   def new
     @comment = Comment.new
     @note = Note.find(params[:note_id])
