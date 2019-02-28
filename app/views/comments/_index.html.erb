@@ -6,20 +6,24 @@
         <% if @note.is_important then %>
           <p class="badge badge-success">Marked As Important</p>
         <% else %>
-          <a href="/notes/change_importance/<%= @note.id%>/true" data-remote="true"><i class="fa fa-heart" style="color:#696969; font-size:20px"></i></a>
+          <%= link_to change_importance_path(@note.id, :true), remote: true do  %>
+            <i class="fa fa-heart" style="color:#696969; font-size:20px"></i>
+          <% end %>
         <% end %>
         <pre><%= @note.description.html_safe %></pre>
-        Tags : <% if @note.tag_list.empty?  %>
-          <span class="msg">No Tags Added</span>
-        <% else %>
-          <% @note.tag_list.each do |tag| %>
-            <span class="badge badge-dark"><%= tag %></span>
-          <% end %>
-        <% end %><br><br>
+        Tags :<% if @note.tag_list.empty? %>
+                <span class="msg">No Tags Added</span>
+              <% else %>
+                <% @note.tag_list.each do |tag| %>
+                  <span class="badge badge-dark"><%= tag %></span>
+                <% end %>
+              <% end %>
+              <br><br>
         <u>Note Owner : <%= @note.user.name %></u><br>
       </div>
       <div class="col-lg-2" align="right">
-          <center><%= link_to 'Add New Comment', new_note_comment_path(@note), remote: :true, class: "btn btn-info" %></center>
+          <center><%= link_to 'Add New Comment', new_note_comment_path(@note),
+             remote: true, class: "btn btn-info" %></center>
           <b>This note is shared to</b>
           <table class="table table-stripped table-bordered">
             <% if @note.shared_users.empty? %>

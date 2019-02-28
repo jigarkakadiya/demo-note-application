@@ -2,15 +2,18 @@
   <tr>
     <th>Sr. No</th>
     <th>Event Details</th>
-    <th>Event Description</th>
+    <th>Event Start At</th>
+    <th>Event End At</th>
     <th>Action</th>
   </tr>
   <% i = 0; @event_list.items.each do |event| %>
   <tr>
-    <td><%= i = i + 1%></td>
+    <td><%= i = i + 1 %></td>
     <td><%= event.summary %></td>
-    <td><%= event.description %></td>
+    <td><%= event.start.date ? event.start.date.to_time.strftime("%d-%m-%Y") : event.start.date_time.strftime("%d-%m-%Y %H:%M") %></td>
+    <td><%= event.end.date ? event.end.date.to_time.strftime("%d-%m-%Y") : event.end.date_time.strftime("%d-%m-%Y %H:%M") %></td>
     <td>
+    <% if @role=="owner" %>
       <%= link_to edit_event_path(event.id,@calendar_id), class:
        "btn btn-outline-info", title: "Change Event", remote: true do %>
         <i class="fa fa-pencil"></i>
@@ -21,6 +24,9 @@
        data: {confirm: 'Do you want to delete this event?'}, remote: true do %>
         <i class="fa fa-trash"></i>
       <% end %>
+    <% else %>
+      Readonly calendar
+    <% end %>
     </td>
   </tr>
   <% end %>

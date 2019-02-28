@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'elasticsearch/model'
 class Note < ApplicationRecord
   include Elasticsearch::Model
@@ -36,12 +38,8 @@ class Note < ApplicationRecord
   #
   ## Custom Methods
   #
-  def self.records
-    return Note.where("is_active = true")
-  end
-
   def shared_users
-    Share.where(note_id: self.id)
+    Share.where(note_id: id)
   end
 end
 Note.import

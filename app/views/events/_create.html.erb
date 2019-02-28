@@ -10,13 +10,13 @@
       <%= form_tag({controller: "events", action: "create"}, method: "post",remote: true) do %>
       <div class="modal-body">
           Event Title :
-          <%= text_field_tag :event_name, "", class: "form-control", required: true   %>
+          <%= text_field :event, :name, class: "form-control", required: true %>
           Event Description :
-          <%= text_area_tag :event_description, "", class: "form-control", required: true, cols: 80, rows: 8 %>
+          <%= text_area :event, :description, class: "form-control", required: true, cols: 80, rows: 8 %>
           Event Start Date :
-          <%= datetime_local_field :event_start_date, "", class: "form-control", required: true   %>
+          <%= datetime_field :event, :start_date, class: "form-control", required: true   %>
           Event End Date :
-          <%= datetime_local_field :event_end_date, "", class: "form-control", required: true   %>
+          <%= datetime_field :event, :end_date, class: "form-control", required: true   %>
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">

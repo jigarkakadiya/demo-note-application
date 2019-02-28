@@ -1,58 +1,66 @@
+# frozen_string_literal: true
+
 class EventsController < ApplicationController
-  require 'Calendar'
   include Calendar
+
   def index
-    calendar = get_calendar
+    if !current_user.access_token.present? || !current_user.refresh_token.present?
+      redirect_to message_events_path
+      return
+    end
+    calendar = my_calendar
     @calendar_list = calendar.list_calendar_lists
   end
 
   def create
-    calendar = get_calendar
-    event = get_event(params[:event_name],params[:event_description],
-      params[:event_start_date][0],params[:event_end_date][0])
-    calendar.insert_event("primary", event)
-    @event_list = get_calendar_events("primary")
-    @calendar_id = "primary"
-    respond_to do |format|
-      format.js { render 'calendar_events.js.erb' }
-    end
+    event = get_event(event_params)
+    new_calendar_event(event)
   end
 
   def edit
-    calendar = get_calendar
+    calendar = my_calendar
     @calendar_id = params[:calendar_id]
     @id = params[:id]
-    @event = calendar.get_event(@calendar_id,@id)
+    @event = calendar.get_event(@calendar_id, @id)
   end
 
   def update
-    calendar = get_calendar
-    #render plain: params.inspect
-    #return
-    event = get_event(params[:event_name],params[:event_description],
-      params[:event_start_date][0],params[:event_end_date][0])
-    @calendar_id = params[:calendar_id]
-    @event_id = params[:event_id]
-    calendar.update_event(@calendar_id,@event_id,event)
-    calendar_events
-    respond_to do |format|
-      format.js { render 'calendar_events.js.erb' }
-    end
+    calendar = my_calendar
+    event = get_event(event_params)
+    calendar.update_event(params[:calendar_id], params[:event_id], event)
+    calendar_events(params[:calendar_id])
   end
 
   def destroy
-    calendar = get_calendar
-    @calendar_id = params[:calendar_id]
-    @event_id = params[:id]
-    calendar.delete_event(@calendar_id,@event_id)
-    calendar_events
-    respond_to do |format|
-      format.js { render "calendar_events.js.erb" }
-    end
+    calendar = my_calendar
+    calendar.delete_event(params[:calendar_id], params[:id])
+    calendar_events(params[:calendar_id])
   end
 
-  def calendar_events
-    @calendar_id = params[:calendar_id]
-    @event_list = get_calendar_events(@calendar_id)
+  def show
+    calendar_events(params[:calendar_id])
+  end
+
+  def calendar_permission
+    client = Signet::OAuth2::Client.new(client_options)
+    redirect_to client.authorization_uri.to_s
+  end
+
+  private
+
+  def event_params
+    params(:event).require(:name, :description, :start_date[0], :end_date[0])
+  end
+
+  def calendar_events(calendar_id)
+    @calendar_id = calendar_id
+    calendar = my_calendar
+    calendar.list_acls(calendar_id).items.each do |cal|
+      @role = cal.role
+    end
+    @event_list = get_calendar_events(calendar_id)
+    respond_to do |format|
+      format.js { render 'show.js.erb' }
+    end
   end
 end

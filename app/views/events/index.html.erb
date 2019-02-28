@@ -35,7 +35,7 @@
         <tbody id="calendars">
             <% @calendar_list.items.each do |calendar| %>
             <tr>
-              <th><%= link_to calendar.summary , calendar_events_path(calendar.id), class: :link, remote: true %></th>
+              <th><%= link_to calendar.summary , event_path(calendar.id), class: :link, remote: true %></th>
             </tr>
             <% end %>
         </tbody>
@@ -48,8 +48,7 @@
   </div>
 </div>
 <!-- all modals -->
-<div class="modal fade" id="add_event"></div>
-<div class="modal fade" id="edit_event"></div>
+<div class="modal fade" id="event"></div>
 <script type="text/javascript">
   $(".alert").hide()
 </script>

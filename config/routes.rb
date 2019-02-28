@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'application/dashboard'
-  get 'notes/change_importance/:id/:status', to: "notes#change_importance", as: :change_importance
-  get 'application/change_autosave/:status', to: "application#change_autosave", as: :change_autosave
-  get 'events/calendar_events/:calendar_id', to: "events#calendar_events", as: :calendar_events, calendar_id: /[^\/]+/
-  get 'events/:id/edit/:calendar_id', to: "events#edit", as: :edit_event, calendar_id: /[^\/]+/
-  delete 'events/:id/:calendar_id', to: "events#destroy", as: :destroy_event, calendar_id: /[^\/]+/
+  get 'notes/change_importance/:id/:status', to: 'notes#change_importance', as: :change_importance
+  get 'application/change_autosave/:status', to: 'application#change_autosave', as: :change_autosave
+  get 'events/calendar_events/:calendar_id', to: 'events#calendar_events', as: :calendar_events, calendar_id: %r{/[^\/]+/}
+  get 'events/:id/edit/:calendar_id', to: 'events#edit', as: :edit_event, calendar_id: %r{/[^\/]+/}
+  get 'events/:calendar_id', to: 'events#show', calendar_id: %r{/[^\/]+/}
+  delete 'events/:id/:calendar_id', to: 'events#destroy', as: :destroy_event, calendar_id: %r{/[^\/]+/}
 
   devise_for :users, controllers: { confirmations: 'confirmations', omniauth_callbacks: 'omniauth_callbacks' }
 
@@ -27,7 +30,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events
+  resources :events do
+    collection do
+      get :message
+      get :calendar_permission
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root "application#dashboard"
+  root 'application#dashboard'
 end
