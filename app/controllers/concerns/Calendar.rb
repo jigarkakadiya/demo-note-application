@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 module Calendar
-  
   def my_calendar
     client = Signet::OAuth2::Client.new(client_options)
     client.update!(authorization_data)
@@ -8,27 +9,27 @@ module Calendar
     calendar
   end
 
-  def get_event(summary, description, start_date, end_date = '')
-    end_date = end_date == '' ? start_date : end_date
+  def get_event(summary, description, start_date, end_date)
     event = Google::Apis::CalendarV3::Event.new(
-              start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_date.to_datetime.rfc3339),
-              end: Google::Apis::CalendarV3::EventDateTime.new(date_time: end_date.to_datetime.rfc3339),
-              summary: summary,
-              description: description
-            )
+      start: Google::Apis::CalendarV3::EventDateTime.new(date_time: start_date.to_datetime.rfc3339),
+      end: Google::Apis::CalendarV3::EventDateTime.new(date_time: end_date.to_datetime.rfc3339),
+      summary: summary,
+      description: description
+    )
     event
   end
 
   def get_calendar_events(calendar_id)
-    calendar = get_calendar
+    calendar = my_calendar
     event_list = calendar.list_events(calendar_id)
     event_list
   end
 
-  def new_calendar_event(event)
+  def new_calendar_event(summary, description, start_date, end_date = '')
+    end_date = end_date == '' ? start_date : end_date
+    event = get_event(summary, description, start_date, end_date)
     calendar = my_calendar
     calendar.insert_event(:primary, event)
-    calendar_events(:primary)
   end
 
   private
@@ -45,11 +46,11 @@ module Calendar
   end
 
   def authorization_data
-    authorization = ({
+    authorization = {
       code: current_user.refresh_token,
       access_token: current_user.access_token,
       expires_in: current_user.expires_at
-    })
+    }
     authorization
   end
 end

@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   include Calendar
 
   def index
-    if !current_user.access_token.present? || !current_user.refresh_token.present?
+    unless current_user.access_token.present? || current_user.refresh_token.present?
       redirect_to message_events_path
       return
     end
@@ -13,8 +13,8 @@ class EventsController < ApplicationController
   end
 
   def create
-    event = get_event(event_params)
-    new_calendar_event(event)
+    new_calendar_event(event_params)
+    calendar_events(:primary)
   end
 
   def edit

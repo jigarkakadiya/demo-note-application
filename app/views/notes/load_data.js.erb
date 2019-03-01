@@ -4,11 +4,12 @@ $("#shared_by_me").addClass("active")
 $("a").tooltip("hide")
 $("#notes").empty()
 $("#notes").html("<%= escape_javascript(render partial: 'notes/data' ) %>");
+$("#msg").text("Note Saved")
 if(<%= @flag %>==1)
 {
   $(".modal-title1").text("")
+  $("#msg").text("<%= @msg %>")
   $("#note_comment").html("<%= escape_javascript(render partial: 'notes/info' ) %>")
 }
 $(".alert").addClass("alert-success")
-$("#msg").text("<%= @msg %>")
 $(".alert").slideDown()

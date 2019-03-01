@@ -12,13 +12,13 @@
     <%= note.radio_button :is_important, false, required: true %> No
     <br>
     <b>Want to set reminder for note?</b>&nbsp;
-    <%= note.radio_button :do_remind, true, required: true %> Yes&nbsp;&nbsp;&nbsp;
-    <%= note.radio_button :do_remind, false, required: true %> No&nbsp;
+    <%= radio_button_tag :do_remind, true, required: true %> Yes&nbsp;&nbsp;&nbsp;
+    <%= radio_button_tag :do_remind, false, required: true %> No&nbsp;
     <div class="col-lg-12" id="choose_date">
       <div class="row">
         <div class="col-lg-3">
           <br>
-          <%= note.datetime_local_field :remind_date, class: "form-control" %>
+          <%= datetime_field :remind_date, "", class: "form-control" %>
           Date To Remind About This Note
         </div>
       </div>
@@ -40,11 +40,11 @@
 
   $("#choose_date").hide()
 
-  $("#note_do_remind_true").change(function(){
+  $("#do_remind_true").change(function(){
     $("#choose_date").slideDown()
   })
 
-  $("#note_do_remind_false").change(function(){
+  $("#do_remind_false").change(function(){
     $("#choose_date").slideUp()
   })
 </script>

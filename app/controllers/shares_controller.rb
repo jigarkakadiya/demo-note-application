@@ -31,22 +31,17 @@ class SharesController < ApplicationController
 
   def create
     user_email = params[:share][:email]
-    if user_email == current_user.email
-      @flag = 'N'
-      @name = current_user.name
+    @name = current_user.name
+    return false if user_email == current_user.email
+
+    @user = User.find_by(email: user_email)
+    @name = @user.nil? ? user_email : @user.name
+    if @user.nil? # user is not registered
+      UserMailer.invitation_mail(user_email, current_user.name).deliver_now
     else
-      @user = User.find_by(email: user_email).first
-      if @user.nil? # user is not registered
-        UserMailer.invitation_mail(user_email, current_user.name).deliver_now
-        @name = user_email
-      else
-        @name = @user.name
-        UserMailer.shared_note_mail(user_email, current_user.name, @name).deliver_now
-      end
-      @share = Share.new(share_data)
-      @share.shared_by = current_user.id
-      @flag = @share.save ? :Y : :N
+      UserMailer.shared_note_mail(user_email, current_user.name, @name).deliver_now
     end
+    @flag = record_shared_note
   end
 
   def ask_for_permission
@@ -69,5 +64,12 @@ class SharesController < ApplicationController
 
   def share_data
     params.require(:share).permit(:note_id, :permission_id, :email)
+  end
+
+  def record_shared_note
+    share = Share.new(share_data)
+    share.shared_by = current_user.id
+    flag = share.save ? 'Y' : 'N'
+    flag
   end
 end

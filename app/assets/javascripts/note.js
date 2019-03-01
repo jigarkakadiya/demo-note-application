@@ -9,24 +9,20 @@ function do_autosave()
   else
     type = "PATCH"
   tinymce.triggerSave();
-  console.log(form_data)
   if($("#note_title").val().length > 0){
+    console.log('in autosave')
     $.ajax({
       type: type,
       url: $("#note_form").attr("action"),
       data: form_data,
       success: function(data){
-        console.log("saved");
+        console.log(data)
         $("#note_form").attr("action", "/notes/"+ data.note_id);
-        $(".alert").addClass("alert-success")
-        msg = "Note Saved"
-        $("#msg").text(msg)
-        $(".alert").slideDown()
+        $.ajax("/notes/load_data")
+        flag = 1
         setTimeout(function() {
             $(".alert").slideUp()
         }, 2000);
-        $.ajax("/notes/load_data")
-        flag = 1
       }
     });//end of ajax
   }//end of if

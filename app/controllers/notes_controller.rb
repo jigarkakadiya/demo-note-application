@@ -22,24 +22,9 @@ class NotesController < ApplicationController
     if current_user.do_autosave
       render json: { note_id: @note.id }
     else
-      if params[:note][:do_remind] == true
-        reminder_date = params[:note][:remind_date]
-        event = get_event(
-          params[:note][:title],
-          'Event Created From NoteMe',
-          reminder_date
-        )
-        new_calendar_event(event)
-
-        reminder = Reminder.new(
-          note_id: @note.id,
-          user_id: current_user.id,
-          remind_date: reminder_date
-        )
-        @msg = reminder.save ? 'Note and reminder saved' : 'Note saved, Reminder not saved'
-      else
-        @msg = 'New Note Added'
-      end
+      @msg = 'New Note Added'
+      do_remind = params[:do_remind] == 'true'
+      set_reminder(@note.title, @note.id, params[:remind_date][0]) if do_remind
       load_data
     end
   end
@@ -47,21 +32,22 @@ class NotesController < ApplicationController
   def edit; end
 
   def update
-    if @note.update(note_params)
-      if current_user.do_autosave
-        render json: { note_id: @note.id }
-      else
-        @msg = 'Note Updated'
-        load_data
-      end
+    return false unless @note.update(note_params)
+    if current_user.do_autosave
+      render json: { note_id: @note.id }
+    else
+      @msg = 'Note Updated'
+      do_remind = params[:do_remind] == 'true'
+      set_reminder(@note.title, @note.id, params[:remind_date][0]) if do_remind
+      load_data
     end
   end
 
   def destroy
-    if @note.update(is_active: false)
-      @msg = 'Note Deleted'
-      load_data
-    end
+    return false unless @note.update(is_active: false)
+
+    @msg = 'Note Deleted'
+    load_data
   end
 
   #
@@ -89,11 +75,9 @@ class NotesController < ApplicationController
 
   def load_data
     @notes = current_user.my_notes
-    unless current_user.do_autosave
-      respond_to do |format|
-        @flag = '1'
-        format.js { render 'notes/load_data.js.erb' }
-      end
+    @flag = current_user.do_autosave ? '0' : '1'
+    respond_to do |format|
+      format.js { render 'notes/load_data.js.erb' }
     end
   end
 
@@ -105,5 +89,15 @@ class NotesController < ApplicationController
 
   def my_note
     @note = Note.find_by(id: params[:id])
+  end
+
+  def set_reminder(note_title, note_id, reminder_date)
+    new_calendar_event(note_title, 'Event Created From NoteMe', reminder_date)
+    reminder = Reminder.new(
+      note_id: note_id,
+      user_id: current_user.id,
+      remind_date: reminder_date
+    )
+    @msg = reminder.save ? 'Note and reminder saved' : 'Note saved, Reminder not saved'
   end
 end

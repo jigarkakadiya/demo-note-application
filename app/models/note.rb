@@ -25,6 +25,10 @@ class Note < ApplicationRecord
     :comments,
     dependent: :destroy
   )
+  has_many(
+    :reminders,
+    dependent: :destroy
+  )
   acts_as_taggable_on :tags
 
   Note.reindex
