@@ -3,13 +3,13 @@ $("#shared_to_me").removeClass("active")
 $("#shared_by_me").addClass("active")
 $("a").tooltip("hide")
 $("#notes").empty()
-$("#notes").html("<%= escape_javascript(render partial: 'notes/data' ) %>");
+$("#notes").html("<%= escape_javascript(render 'notes/data', notes: @notes) %>");
 $("#msg").text("Note Saved")
 if(<%= @flag %>==1)
 {
   $(".modal-title1").text("")
   $("#msg").text("<%= @msg %>")
-  $("#note_comment").html("<%= escape_javascript(render partial: 'notes/info' ) %>")
+  $("#note_comment").html("<%= escape_javascript(render 'notes/info') %>")
 }
 $(".alert").addClass("alert-success")
 $(".alert").slideDown()

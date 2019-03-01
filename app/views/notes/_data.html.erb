@@ -1,9 +1,9 @@
-<% if @notes.empty? %>
+<% if notes.nil? %>
   <tr>
     <td align="center" class="msg">No Notes Found!</td>
   </tr>
 <% else %>
-  <% @notes.each do |note| %>
+  <% notes.each do |note| %>
   <tr>
     <td>
       Title: <b><%= link_to note.title, note_comments_path(note.id), remote: true , class: :link, action: :replace, title: "Click To See Details"  %></b>
@@ -34,7 +34,6 @@
     </td>
   </tr>
   <% end %> <!-- end of do loop -->
-
 <% end %> <!-- end of if -->
 <script type="text/javascript">
   $(document).ready(function(){

@@ -3,11 +3,11 @@
   <!-- Modal content-->
   <div class="modal-content">
     <div class="modal-header bg-info">
-      <h4 class="modal-title">Share Note "<%= @note.title %>"</h4>
+      <h4 class="modal-title">Share Note "<%= note.title %>"</h4>
       <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
-    <%= form_with model:@share, method: :post do |share| %>
-      <%= share.hidden_field :note_id, value: @note.id %>
+    <%= form_with model:share, method: :post do |share| %>
+      <%= share.hidden_field :note_id, value: note.id %>
       <div class="modal-body">
         Enter email to share the note :
         <%= share.email_field :email, class: "form-control", required: true %>

@@ -10,7 +10,7 @@ class SharesController < ApplicationController
     @active = :shared_to_me
     @deactive = :shared_by_me
     respond_to do |format|
-      format.js { render 'load_data.js.erb' }
+      format.js {render 'load_data.js.erb'}
     end
   end
 
@@ -20,7 +20,7 @@ class SharesController < ApplicationController
     @deactive = :shared_to_me
     respond_to do |format|
       @flag = 0
-      format.js { render 'notes/load_data.js.erb' }
+      format.js {render 'notes/load_data.js.erb'}
     end
   end
 

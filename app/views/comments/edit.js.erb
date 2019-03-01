@@ -1,4 +1,4 @@
-$("#comment").html("<%= escape_javascript(render partial: 'edit' ) %>");
+$("#comment").html("<%= escape_javascript(render 'edit' ) %>");
 $(".modal-title").text("Edit Comment");
 $(".submit").attr("value","Edit Comment");
 $("#comment").modal('show');

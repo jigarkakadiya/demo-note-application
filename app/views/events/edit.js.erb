@@ -1,2 +1,2 @@
-$(".modal").html("<%= escape_javascript(render partial: 'edit' ) %>")
+$(".modal").html("<%= escape_javascript(render 'edit', calendar_id: @calendar_id, id: @id, event: @event) %>")
 $(".modal").modal("show")

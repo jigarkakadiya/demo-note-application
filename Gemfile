@@ -77,6 +77,7 @@ gem 'jquery-rails'
 gem 'letter_opener'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem "rails_best_practices"
 gem 'rubocop', require: false
 gem 'searchkick'
 gem 'tinymce-rails'

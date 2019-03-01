@@ -55,14 +55,14 @@ class User < ApplicationRecord
   def my_notes
     notes.where(is_active: true)
   end
-
+=begin
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
     end
   end
-
+=end
   def self.create_from_google_data(provider_data)
     where(provider: provider_data.provider, uid: provider_data.uid).first_or_create do |user|
       user.email = provider_data.info.email

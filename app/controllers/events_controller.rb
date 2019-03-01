@@ -12,6 +12,8 @@ class EventsController < ApplicationController
     @calendar_list = calendar.list_calendar_lists
   end
 
+  def new; end
+
   def create
     new_calendar_event(event_params)
     calendar_events(:primary)

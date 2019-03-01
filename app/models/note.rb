@@ -12,6 +12,8 @@ class Note < ApplicationRecord
   ## Associations
   #
   belongs_to :user
+  delegate :name , to: :user, prefix: true
+
   has_many(
     :shares,
     dependent: :destroy

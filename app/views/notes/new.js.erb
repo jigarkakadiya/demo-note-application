@@ -1,4 +1,4 @@
-$("#note_comment").html("<%= escape_javascript(render partial: 'new' ) %>");
+$("#note_comment").html("<%= escape_javascript(render 'new') %>");
 $(".modal-title1").text("Add New Note");
 $(".submit").attr("value","Add Note");
 tinymce.remove();

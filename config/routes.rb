@@ -27,19 +27,18 @@ Rails.application.routes.draw do
 
   devise_for :users,
              controllers: {
-               confirmations: 'confirmations',
                omniauth_callbacks: 'omniauth_callbacks'
              }
 
-  resources :notes do
+  resources :notes, except: [:show] do
     collection do
       post :search_note
       get :load_data
     end
-    resources :comments
+    resources :comments, except: [:show]
   end
 
-  resources :shares do
+  resources :shares, only: [:new, :create, :index] do
     collection do
       get :shared_notes_with_me
       get :shared_notes_by_me

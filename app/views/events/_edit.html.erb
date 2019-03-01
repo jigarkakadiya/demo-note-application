@@ -9,16 +9,16 @@
       <!-- Modal body -->
       <%= form_tag({controller: "events", action: "update"}, method: :patch,remote: true) do %>
       <div class="modal-body">
-        <%= hidden_field_tag :calendar_id, @calendar_id  %>
-        <%= hidden_field_tag :event_id, @id  %>
+        <%= hidden_field_tag :calendar_id, calendar_id  %>
+        <%= hidden_field_tag :event_id, id  %>
         Event Title :
-        <%= text_field_tag :event_name, @event.summary, class: "form-control", required: true   %>
+        <%= text_field_tag :event_name, event.summary, class: "form-control", required: true   %>
         Event Description :
-        <%= text_area_tag :event_description, @event.description, class: "form-control", required: true, cols: 80, rows: 8 %>
+        <%= text_area_tag :event_description, event.description, class: "form-control", required: true, cols: 80, rows: 8 %>
         Event Start Date :
-        <%= datetime_field :event_start_date, "", value: @event.start.date_time.strftime("%Y-%m-%dT%H:%M"), class: "form-control", required: true   %>
+        <%= datetime_field :event_start_date, "", value: event.start.date_time.strftime("%Y-%m-%dT%H:%M"), class: "form-control", required: true   %>
         Event End Date :
-        <%= datetime_field :event_end_date, "", value: @event.end.date_time.strftime("%Y-%m-%dT%H:%M"), class: "form-control", required: true   %>
+        <%= datetime_field :event_end_date, "", value: event.end.date_time.strftime("%Y-%m-%dT%H:%M"), class: "form-control", required: true   %>
       </div>
       <!-- Modal footer -->
       <div class="modal-footer">

@@ -2,36 +2,36 @@
   <div class="col-lg-12">
     <div class="row" style="border:0px solid">
       <div class="col-lg-10" style="border:0px solid">
-        <h5><u><b><%= @note.title %></b></u></h5>
-        <% if @note.is_important then %>
+        <h5><u><b><%= note.title %></b></u></h5>
+        <% if note.is_important then %>
           <p class="badge badge-success">Marked As Important</p>
         <% else %>
-          <%= link_to change_importance_path(@note.id, :true), remote: true do  %>
+          <%= link_to change_importance_path(note.id, :true), remote: true do  %>
             <i class="fa fa-heart" style="color:#696969; font-size:20px"></i>
           <% end %>
         <% end %>
-        <pre><%= @note.description.html_safe %></pre>
-        Tags :<% if @note.tag_list.empty? %>
+        <pre><%= note.description.html_safe %></pre>
+        Tags :<% if note.tag_list.empty? %>
                 <span class="msg">No Tags Added</span>
               <% else %>
-                <% @note.tag_list.each do |tag| %>
+                <% note.tag_list.each do |tag| %>
                   <span class="badge badge-dark"><%= tag %></span>
                 <% end %>
               <% end %>
               <br><br>
-        <u>Note Owner : <%= @note.user.name %></u><br>
+        <u>Note Owner : <%= note.user_name %></u><br>
       </div>
       <div class="col-lg-2" align="right">
-          <center><%= link_to 'Add New Comment', new_note_comment_path(@note),
+          <center><%= link_to 'Add New Comment', new_note_comment_path(note),
              remote: true, class: "btn btn-info" %></center>
           <b>This note is shared to</b>
           <table class="table table-stripped table-bordered">
-            <% if @note.shared_users.empty? %>
+            <% if note.shared_users.empty? %>
             <tr>
               <td class="msg">No Shares</td>
             </tr>
             <% end %>
-            <% @note.shared_users.each do |user| %>
+            <% note.shared_users.each do |user| %>
             <tr>
               <td><%= user.email %><br></td>
             </tr>
@@ -42,19 +42,19 @@
   </div>
 </div>
 <hr>
-<% if @note.comments.empty? %>
-  <center class="msg">No Comments Added Yet For <%= @note.title %> !!<center>
+<% if note.comments.empty? %>
+  <center class="msg">No Comments Added Yet For <%= note.title %> !!<center>
 <% else %>
     <div class="col-lg-12">
-      <% @comments.each do |comment| %>
+      <% comments.each do |comment| %>
       <div class="row">
         <div class="col-lg-6">
-          <b><%= if comment.user.name==current_user.name then "You" else comment.user.name end %></b>&nbsp; commented on &nbsp; <b><%= comment.created_at.strftime("%d-%m-%Y") %></b>
+          <b><%= comment.user_name==current_user.name ? "You" : comment.user_name %></b>&nbsp; commented on &nbsp; <b><%= comment.created_at.strftime("%d-%m-%Y") %></b>
         </div>
         <div class="col-lg-6" align="right">
           <% if can? :manage,comment %>
-            <%= link_to 'Edit' , edit_note_comment_path(@note,comment), remote: :true, class: :link %> |
-            <%= link_to 'Delete', note_comment_path(@note,comment), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' }, class: :link %>
+            <%= link_to 'Edit' , edit_note_comment_path(note,comment), remote: :true, class: :link %> |
+            <%= link_to 'Delete', note_comment_path(note,comment), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' }, class: :link %>
           <% end %>
         </div>
       </div>
@@ -67,10 +67,10 @@
       <% end %>
       <div class="digg_pagination" align="center">
         <div class="page_info" align="center">
-          <%= page_entries_info @comments %>
+          <%= page_entries_info comments %>
         </div>
         <div align="center" class="links">
-          <%= will_paginate @comments %>
+          <%= will_paginate comments %>
         </div>
       </div>
     </div>

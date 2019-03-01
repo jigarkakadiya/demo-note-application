@@ -1,9 +1,9 @@
-<% if @notes.empty? %>
+<% if notes.empty? %>
   <tr>
     <td align="center" class="msg">No Notes Found!</td>
   </tr>
 <% else %>
-  <% @notes.each do |shared_note| %>
+  <% notes.each do |shared_note| %>
   <tr>
     <td>
       Title: <b><%= link_to shared_note.note.title, note_comments_path(shared_note.note_id), remote: true , class: :link, action: :replace  %></b>
