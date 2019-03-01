@@ -33,6 +33,7 @@ class NotesController < ApplicationController
 
   def update
     return false unless @note.update(note_params)
+
     if current_user.do_autosave
       render json: { note_id: @note.id }
     else
