@@ -3,12 +3,12 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  #before_action :authenticate_admin_user!, if: :admin_controller?
 
   def dashboard; end
 
   def change_autosave
     current_user.update(do_autosave: params[:status])
-    current_user.do_autosave = params[:status]
   end
 
   protected
