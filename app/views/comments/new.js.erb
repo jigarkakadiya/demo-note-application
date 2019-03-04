@@ -1,4 +1,4 @@
-$("#comment").html("<%= escape_javascript(render partial: 'new' ) %>");
+$("#comment").html("<%= escape_javascript(render 'new', note: @note, comment: @comment) %>");
 $(".modal-title").text("Add New Comment");
 $(".submit").attr("value","Add New Comment");
 $("#comment").modal('show');

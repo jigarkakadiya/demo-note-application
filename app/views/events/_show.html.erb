@@ -1,0 +1,33 @@
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>Sr. No</th>
+    <th>Event Details</th>
+    <th>Event Start At</th>
+    <th>Event End At</th>
+    <th>Action</th>
+  </tr>
+  <% i = 0; event_list.items.each do |event| %>
+  <tr>
+    <td><%= i = i + 1 %></td>
+    <td><%= event.summary %></td>
+    <td><%= event.start.date ? event.start.date.to_time.strftime("%d-%m-%Y") : event.start.date_time.strftime("%d-%m-%Y %H:%M") %></td>
+    <td><%= event.end.date ? event.end.date.to_time.strftime("%d-%m-%Y") : event.end.date_time.strftime("%d-%m-%Y %H:%M") %></td>
+    <td>
+    <% if role=="owner" %>
+      <%= link_to edit_event_path(event.id,calendar_id), class:
+       "btn btn-outline-info", title: "Change Event", remote: true do %>
+        <i class="fa fa-pencil"></i>
+      <% end %>&nbsp;&nbsp;&nbsp;
+
+      <%= link_to destroy_event_path(event.id,calendar_id), class:
+       "btn btn-outline-info", title: "Change Event", method: :delete,
+       data: {confirm: 'Do you want to delete this event?'}, remote: true do %>
+        <i class="fa fa-trash"></i>
+      <% end %>
+    <% else %>
+      Readonly calendar
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>

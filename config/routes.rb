@@ -1,15 +1,65 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   get 'application/dashboard'
-  get 'notes/change_importance/:id/:status', to: "notes#change_importance", as: :change_importance
-  post 'notes/search_note', to: "notes#search_note", as: :search_note
-  get 'application/change_autosave/:status', to: "application#change_autosave", as: :change_autosave
-  get 'notes/load_data', to: "notes#load_data", as: :load_data
-  get 'notes/invitation_email/:id', to: "notes#invitation_email", as: :invitation_email
-  post 'notes/check_email'
-  devise_for :users, controllers: { confirmations: 'confirmations' }
-  resources :notes do
-    resources :comments
+
+  get 'notes/change_importance/:id/:status',
+      to: 'notes#change_importance',
+      as: :change_importance
+
+  get 'application/change_autosave/:status',
+      to: 'application#change_autosave',
+      as: :change_autosave
+
+  get 'events/:id/edit/:calendar_id',
+      to: 'events#edit',
+      as: :edit_event,
+      calendar_id: %r{[^/]+}
+
+  delete 'events/:id/:calendar_id',
+         to: 'events#destroy',
+         as: :destroy_event,
+         calendar_id: %r{[^/]+}
+
+  devise_for :users,
+             controllers: {
+               omniauth_callbacks: 'omniauth_callbacks'
+             }
+
+  resources :notes, except: [:show] do
+    collection do
+      post :search_note
+      get :load_data
+    end
+    resources :comments, except: [:show]
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root "application#dashboard"
+
+  resources :shares, only: [:new, :create, :index] do
+    collection do
+      get :shared_notes_with_me
+      get :shared_notes_by_me
+    end
+    member do
+      get :change_note_permission
+      get :ask_for_permission
+    end
+  end
+
+  resources :events, except: [:edit, :update, :destroy, :show] do
+    collection do
+      get :message
+      get :calendar_permission
+    end
+  end
+  get 'events/:calendar_id',
+      to: 'events#show',
+      as: :event,
+      calendar_id: %r{[^/]+}
+
+
+  # For details on the DSL available within this file,
+  # see http://guides.rubyonrails.org/routing.html
+  root 'application#dashboard'
 end

@@ -1,0 +1,2 @@
+$(".modal").modal('hide')
+$("#calendar_event").html("<%= escape_javascript(render 'show', event_list: @event_list, calendar_id: @calendar_id, role: @role) %>")

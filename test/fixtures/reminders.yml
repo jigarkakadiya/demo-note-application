@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  note: one
+  remind_date: 2019-02-22
+  user: one
+
+two:
+  note: two
+  remind_date: 2019-02-22
+  user: two

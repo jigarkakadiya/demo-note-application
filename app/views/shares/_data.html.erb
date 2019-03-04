@@ -1,0 +1,36 @@
+<% if notes.empty? %>
+  <tr>
+    <td align="center" class="msg">No Notes Found!</td>
+  </tr>
+<% else %>
+  <% notes.each do |shared_note| %>
+  <tr>
+    <td>
+      Title: <b><%= link_to shared_note.note.title, note_comments_path(shared_note.note_id), remote: true , class: :link, action: :replace  %></b>
+      <br>
+      <% if can? :update,shared_note %>
+        <%= link_to  edit_note_path(shared_note.note_id),remote: :true, class: "btn btn-outline-info", title: "Edit This Note" do %>
+          <i class="fa fa-pencil" style="font-size:20px"></i>
+        <% end %>&nbsp;&nbsp;
+      <% end %>
+      <%= link_to new_note_comment_path(shared_note.note_id),remote: :true, class: "btn btn-outline-info", title: "Add new comment" do %>
+        <i class="fa fa-plus" style="font-size:20px"></i>
+      <% end %>&nbsp;&nbsp;
+      <% if cannot? :update,shared_note %>
+        <%= link_to  ask_for_permission_share_path(shared_note.id),remote: :true, class: "btn btn-outline-info", title: "Ask For Edit Permission" do %>
+          <i class="fa fa-question" style="font-size:20px"></i>
+        <% end %>&nbsp;&nbsp;
+      <% end %>
+      <% if can? :manage,shared_note %>
+        <%= link_to note_path(shared_note.note_id), remote: true, title: "Delete this note", class: "btn btn-outline-info", method: :delete, data: { confirm: 'Do you want to delete' } do %>
+          <i class="fa fa-trash" style="font-size:20px"></i>
+        <% end %>&nbsp;&nbsp;
+        <%= link_to new_share_path(note_id: shared_note.note_id), remote: true, title: "Share this note", class: "btn btn-outline-info" do %>
+          <i class="fa fa-share-alt" style="font-size:20px"></i>
+        <% end %>
+      <% end %><br>
+      Shared by : <%= shared_note.note.user.name %>
+    </td>
+  </tr>
+  <% end %> <!-- end of do loop -->
+<% end %> <!-- end of if -->
