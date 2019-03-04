@@ -1,0 +1,4 @@
+<h1>Hello <%= @owner_name %>,</h1>
+<h3><%= @asker_name %> has asked for <b>Edit</b> permission on note <b>"<%= @note_name %>"</b><h3>
+<p>Please follow below link to give edit access</p>
+<%= link_to "Allow Edit Access", change_note_permission_url(@shares_id) %>

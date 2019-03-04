@@ -1,7 +1,13 @@
-#/usr/local/bin/elasticsearch
+# frozen_string_literal: true
+
+# /usr/local/bin/elasticsearch
 class NotesController < ApplicationController
+  before_action :my_note, exept: %i[index new create]
+  require 'Calendar'
+  include Calendar
+
   def index
-    @notes = Note.records
+    @notes = current_user.my_notes
   end
 
   def new
@@ -9,85 +15,87 @@ class NotesController < ApplicationController
   end
 
   def create
-    @note = Note.new(note_params)
-    @note.user_id = current_user.id
-    if @note.save
-      if current_user.do_autosave
-        render :json => { note_id: @note.id }
-      else
-        load_data
-      end
-    end #end of @note.save
+    note = current_user.notes.build(note_params)
+    return false unless note.save
+
+    msg = 'New Note Added'
+    check_reminder(msg, @note, params[:do_remind], params[:remind_date][0])
   end
 
-  def edit
-    @note = Note.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @note = Note.find(params[:id])
-    if @note.update(note_params)
-      if current_user.do_autosave
-        render :json => { note_id: @note.id }
-      else
-        load_data
-      end #end of if autosave on
-    end #end of @note.update
+    return false unless @note.update(note_params)
+
+    msg = 'Note Updated'
+    check_reminder(msg, @note, params[:do_remind], params[:remind_date][0])
   end
 
   def destroy
-    @note = Note.find(params[:id])
-    if @note.update(is_active: false)
-      load_data
-    end #end of if @dept.delete
+    return false unless @note.update(is_active: false)
+
+    @msg = 'Note Deleted'
+    load_data
   end
 
-  #custome functions starts
+  #
+  ## custome functions
+  #
+
   def search_note
-    #@notes = Note.where("title LIKE :value or description LIKE :value and is_active = true",{value: :params[:search]})
+    # @notes = Note.where("title LIKE :value or description LIKE :value and
+    # is_active = true",{value: :params[:search]})
     content = params[:search]
-    if content.nil? || content == ""
-      @notes =  Note.records
+    if content.nil? || content == ''
+      @notes = current_user.my_notes
     else
-      taged_note = Note.tagged_with(content)
-      searched_note = Note.search(content)
-      @notes = taged_note + searched_note
+      tagged_note = current_user.my_notes.tagged_with(content)
+      searched_note = current_user.my_notes.search(content)
+      @notes = tagged_note + searched_note
     end
   end
 
   def change_importance
-    @note = Note.find(params[:id])
-    @note.update(is_important: params[:status])
-    @notes = Note.records
+    return false unless @note.update(is_important: params[:status])
+
+    @msg = 'Note Importance Changed'
+    load_data
   end
 
   def load_data
-    @notes = Note.records
-    if !current_user.do_autosave
+    @notes = current_user.my_notes
+    if current_user.do_autosave
+      render json: { note_id: note.id }
+    else
+      @flag = '1'
       respond_to do |format|
-        @notes = Note.records
         format.js { render 'notes/load_data.js.erb' }
-      end #end of respond_to
-    end #end of if
-  end
-
-  def invitation_email
-    @note = Note.find(params[:id])
-  end
-
-  def check_email
-    user_email = params[:user_email]
-    @user = User.where("email = ?",user_email)
-    if @user.empty? #user is not registered
-      @user = User.invite!({:email => user_email,:name => current_user.name})
+      end
     end
-    share_data = {}
-    @share = Share.create()
-    return
   end
-  #custom function ends
+
+  def check_reminder(msg, note, do_remind, reminder_date)
+    @msg = msg
+    set_reminder(note.title, note.id, reminder_date) if do_remind == 'true'
+    load_data
+  end
+
   private
+
   def note_params
-    params.require(:note).permit(:title,:description,:tag_list,:is_important)
+    params.require(:note).permit(:title, :description, :tag_list, :is_important)
+  end
+
+  def my_note
+    @note = Note.find_by(id: params[:id])
+  end
+
+  def set_reminder(note_title, note_id, reminder_date)
+    new_calendar_event(note_title, 'Event Created From NoteMe', reminder_date)
+    reminder = current_user.reminder.build(
+      note_id: note_id,
+      remind_date: reminder_date
+    )
+    @msg = reminder.save ? 'Note and reminder saved' : 'Note saved, Reminder not saved'
   end
 end

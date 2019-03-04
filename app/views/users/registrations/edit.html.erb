@@ -1,7 +1,11 @@
 <div class="col-lg-12" style="background-color: #e9ecef">
   <br>
   <div class="row">
-      <div class="col-12" align="right">
+      <div class="col-6">
+        <h5>Not Happy With NoteMe?</h5>
+        <%= link_to "Delete My Account", registration_path(resource_name) ,class: "btn btn-outline-info",data: { confirm: "Are you sure?" }, method: :delete %>
+      </div>
+      <div class="col-6" align="right">
       <%
         if current_user.do_autosave
           status = false
@@ -23,7 +27,7 @@
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: :true }) do |f| %>
         <div class="col-lg-10" style="border: 0px #A9A9A9 solid">
           <div class="card" style="width:250px">
-            <% if current_user.profile_photo.nil? %>
+            <% if !current_user.profile_photo.attached? %>
               <img class="card-img-top" src="/img_avatar1.png" alt="Profile image">
             <% else %>
               <img class="card-img-top" src="<%= url_for(current_user.profile_photo) %>" alt="Profile image">

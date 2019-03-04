@@ -18,7 +18,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = '@example.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -335,4 +335,8 @@ Devise.setup do |config|
   # ActiveSupport.on_load(:devise_failure_app) do
   #   include Turbolinks::Controller
   # end
+  config.omniauth :google_oauth2, '958955211976-g1gvcl9c7a7hhqt1golsp4q56bcjhc0u.apps.googleusercontent.com', 'DBx45uuwyHqCwHF3rZDU1WoB',
+                  access_type: 'offline',
+                  prompt: 'consent',
+                  scope: 'userinfo.email,calendar'
 end

@@ -1,0 +1,2 @@
+$("#invitation_email").html("<%= escape_javascript(render 'new', note: @note, share: @share) %>");
+$("#invitation_email").modal("show")

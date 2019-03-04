@@ -29,3 +29,14 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+.rvmrc
+config/database.yml
+db/schema.rb
+Gemfile.lock
+.DS_Store
+/tmp
+/storage/uploads
+/log
+db/development.sqlite3
+master.key

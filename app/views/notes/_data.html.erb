@@ -1,29 +1,42 @@
-<% if @notes.empty? %>
+<% if notes.empty? %>
   <tr>
     <td align="center" class="msg">No Notes Found!</td>
   </tr>
 <% else %>
-  <% @notes.each do |note| %>
+  <% notes.each do |note| %>
   <tr>
     <td>
-        Title: <b><%= link_to note.title, note_comments_path(note.id), remote: :true , class: :link, action: :replace  %></b>&nbsp;
-        <%= link_to invitation_email_path(note.id), data: {remote: true}, title: "Share this note" do %>
-          <i class="fa fa-share-alt" style="float:right; color:#696969; font-size:20px"></i>
-        <% end %>
+      Title: <b><%= link_to note.title, note_comments_path(note.id), remote: true , class: :link, action: :replace, title: "Click To See Details"  %></b>
+      <div style="float:right">
         <% if note.is_important then %>
-          <%= link_to change_importance_path(note.id, 'false'), data: {remote: true} do %>
-            <i class="fa fa-heart" style="float:right; color:#ff0000; font-size:20px"></i>
+          <%= link_to change_importance_path(note.id, 'false'), remote: true, title: "Remove from important notes" do %>
+            <i class="fa fa-heart" style="color:#ff0000; font-size:20px"></i>
           <% end %>
         <% else %>
-          <%= link_to change_importance_path(note.id, 'true'), data: {remote: true} do %>
-            <i class="fa fa-heart" style="float:right; color:#696969; font-size:20px"></i>
+          <%= link_to change_importance_path(note.id, 'true'), remote: true, title: "Make note important" do %>
+            <i class="fa fa-heart" style="color:#696969; font-size:20px"></i>
           <% end %>
-        <% end %><br>
-        <%= link_to 'Edit' , edit_note_path(note.id), remote: :true, class: :link, action: :replace %> |
-        <%= link_to 'Delete', note_path(note), method: :delete, remote: :true, data: { confirm: 'Do you want to delete' }, class: :link %> |
-        <%= link_to 'New Comment', new_note_comment_path(note.id), remote: :true, class: :link %>
+        <% end %>
+      </div>
+      <br>
+      <%= link_to  edit_note_path(note.id),remote: :true, class: "btn btn-outline-info edit", title: "Edit This Note" do %>
+        <i class="fa fa-pencil" style="font-size:20px"></i>
+      <% end %>&nbsp;&nbsp;
+      <%= link_to note_path(note.id), remote: true, title: "Delete this note", class: "btn btn-outline-info", method: :delete, data: { confirm: 'Do you want to delete' } do %>
+        <i class="fa fa-trash" style="font-size:20px"></i>
+      <% end %>&nbsp;&nbsp;
+      <%= link_to new_note_comment_path(note.id),remote: :true, class: "btn btn-outline-info", title: "Add new comment" do %>
+        <i class="fa fa-comment-o" style="font-size:20px"></i>
+      <% end %>&nbsp;&nbsp;
+      <%= link_to new_share_path(note_id: note), remote: true, title: "Share this note", class: "btn btn-outline-info" do %>
+        <i class="fa fa-share-alt" style="font-size:20px"></i>
+      <% end %>
     </td>
   </tr>
   <% end %> <!-- end of do loop -->
-
 <% end %> <!-- end of if -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("a").tooltip()
+  })
+</script>
