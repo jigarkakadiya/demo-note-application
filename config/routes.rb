@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   get 'application/dashboard'
 
   get 'notes/change_importance/:id/:status',
@@ -14,10 +16,6 @@ Rails.application.routes.draw do
   get 'events/:id/edit/:calendar_id',
       to: 'events#edit',
       as: :edit_event,
-      calendar_id: %r{[^/]+}
-
-  get 'events/:calendar_id',
-      to: 'events#show',
       calendar_id: %r{[^/]+}
 
   delete 'events/:id/:calendar_id',
@@ -49,12 +47,18 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events do
+  resources :events, except: [:edit, :update, :destroy, :show] do
     collection do
       get :message
       get :calendar_permission
     end
   end
+  get 'events/:calendar_id',
+      to: 'events#show',
+      as: :event,
+      calendar_id: %r{[^/]+}
+
+
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html
   root 'application#dashboard'

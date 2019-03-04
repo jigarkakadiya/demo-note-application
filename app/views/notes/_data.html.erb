@@ -1,4 +1,4 @@
-<% if notes.nil? %>
+<% if notes.empty? %>
   <tr>
     <td align="center" class="msg">No Notes Found!</td>
   </tr>
@@ -28,7 +28,7 @@
       <%= link_to new_note_comment_path(note.id),remote: :true, class: "btn btn-outline-info", title: "Add new comment" do %>
         <i class="fa fa-comment-o" style="font-size:20px"></i>
       <% end %>&nbsp;&nbsp;
-      <%= link_to new_share_path(note_id:note), remote: true, title: "Share this note", class: "btn btn-outline-info" do %>
+      <%= link_to new_share_path(note_id: note), remote: true, title: "Share this note", class: "btn btn-outline-info" do %>
         <i class="fa fa-share-alt" style="font-size:20px"></i>
       <% end %>
     </td>

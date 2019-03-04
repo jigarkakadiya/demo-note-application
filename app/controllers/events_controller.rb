@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   include Calendar
 
   def index
-    unless current_user.access_token.present? || current_user.refresh_token.present?
+    if !current_user.access_token.present? || !current_user.refresh_token.present?
       redirect_to message_events_path
       return
     end
@@ -41,6 +41,10 @@ class EventsController < ApplicationController
 
   def show
     calendar_events(params[:calendar_id])
+  end
+
+  def message
+    puts "message called"
   end
 
   def calendar_permission
