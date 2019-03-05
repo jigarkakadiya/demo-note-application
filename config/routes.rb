@@ -58,7 +58,7 @@ Rails.application.routes.draw do
       as: :event,
       calendar_id: %r{[^/]+}
 
-
+  resources :charges
   # For details on the DSL available within this file,
   # see http://guides.rubyonrails.org/routing.html
   root 'application#dashboard'
