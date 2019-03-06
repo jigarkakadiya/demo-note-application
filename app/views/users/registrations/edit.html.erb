@@ -51,7 +51,7 @@
             <%= f.text_field :contact, autocomplete: "contact", class: "form-control" %><br>
 
             <%= f.label :email %><br />
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", readonly: true %>
             <br>
             <center><%= f.submit "Update" , class: :"btn btn-info" %></center>
         </div>

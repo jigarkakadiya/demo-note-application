@@ -4,7 +4,7 @@
     <div class="col-lg-4">
       <div class="" style="border: 2px solid #c71585; padding: 20px 20px 20px; background-color:#FFCCFF" align="center">
         <%= form_tag charges_path do %>
-          <%= hidden_field_tag :plan_id, 1 %>
+          <%= hidden_field_tag :amount, 500 %>
           <article>
             <% if flash[:error].present? %>
               <div id="error_explanation">
@@ -36,6 +36,7 @@
     <div class="col-lg-4" align="center">
       <div class="" style="border: 2px solid #0000CD; padding: 20px 20px 20px; background-color:#00bfff" align="center">
         <%= form_tag charges_path do %>
+          <%= hidden_field_tag :amount, 1500 %>
           <article>
             <% if flash[:error].present? %>
               <div id="error_explanation">
@@ -66,6 +67,7 @@
     <div class="col-lg-4" align="center">
       <div class="" style="border: 2px solid green; padding: 20px 20px 20px; background-color:#99FF99">
         <%= form_tag charges_path do %>
+        <%= hidden_field_tag :amount, 2500 %>
           <article>
             <% if flash[:error].present? %>
               <div id="error_explanation">
