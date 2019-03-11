@@ -9,8 +9,8 @@
     <%= form_with model:share, method: :post do |share| %>
       <%= share.hidden_field :note_id, value: note.id %>
       <div class="modal-body">
-        Enter email to share the note :
-        <%= share.email_field :email, class: "form-control", required: true %>
+        Enter email(s) to share the note :
+        <%= share.text_field :email, class: "form-control", required: true %>
         Permission : <br>
         <%= share.radio_button :permission_id, 1, checked: true %> Read Only&nbsp;&nbsp;&nbsp;
         <%= share.radio_button :permission_id, 2 %> Can Edit&nbsp;&nbsp;&nbsp;
