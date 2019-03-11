@@ -36,10 +36,10 @@ module Calendar
 
   def client_options
     {
-      client_id: '958955211976-g1gvcl9c7a7hhqt1golsp4q56bcjhc0u.apps.googleusercontent.com',
-      client_secret: 'DBx45uuwyHqCwHF3rZDU1WoB',
-      authorization_uri: 'https://accounts.google.com/o/oauth2/auth',
-      token_credential_uri: 'https://accounts.google.com/o/oauth2/token',
+      client_id: ENV['GOOGLE_CLIENT_ID'],
+      client_secret: ENV['GOOGLE_CLIENT_SECRET'],
+      authorization_uri: ENV['AUTHORIZE_URL'],
+      token_credential_uri: ENV['TOCKEN_CREDENTIAL_URL'],
       scope: Google::Apis::CalendarV3::AUTH_CALENDAR,
       redirect_uri: events_url
     }
