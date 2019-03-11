@@ -48,4 +48,4 @@ class Note < ApplicationRecord
     Share.where(note_id: id)
   end
 end
-Note.import
+Note.import(force: true)
