@@ -40,3 +40,6 @@ Gemfile.lock
 /log
 db/development.sqlite3
 master.key
+
+# Ignore application configuration
+/config/application.yml

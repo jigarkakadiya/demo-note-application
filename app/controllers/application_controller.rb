@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
 
   def change_autosave
     current_user.update(do_autosave: params[:status])
-    current_user.do_autosave = params[:status]
   end
 
   protected

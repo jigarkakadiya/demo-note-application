@@ -1,0 +1,99 @@
+<br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="" style="border: 2px solid #c71585; padding: 20px 20px 20px; background-color:#FFCCFF" align="center">
+        <%= form_tag charges_path do %>
+          <%= hidden_field_tag :amount, 500 %>
+          <article>
+            <% if flash[:error].present? %>
+              <div id="error_explanation">
+                <p><%= flash[:error] %></p>
+              </div>
+            <% end %>
+            <label class="amount">
+              Buy NoteMe Silver Version<br>
+              <span>Only At <b>$5.00</b></span>
+              <hr>
+              <u>This will include</u>
+              <ol align="left">
+                <li>Manage Your notes</li>
+                <li>Make Note Important</li>
+                <li>Add Images, GIF in your note</li>
+                <li>Edit Your Profile</li>
+              </ol>
+            </label>
+          </article>
+
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= ENV['stripe_publishable_key'] %>"
+                data-description="A month's subscription"
+                data-amount="500"
+                data-locale="auto"></script>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-4" align="center">
+      <div class="" style="border: 2px solid #0000CD; padding: 20px 20px 20px; background-color:#00bfff" align="center">
+        <%= form_tag charges_path do %>
+          <%= hidden_field_tag :amount, 1500 %>
+          <article>
+            <% if flash[:error].present? %>
+              <div id="error_explanation">
+                <p><%= flash[:error] %></p>
+              </div>
+            <% end %>
+            <label class="amount">
+              Buy NoteMe Golden Version<br>
+              <span>Only At <b>$15.00</b></span>
+              <hr>
+              <u>This will include</u>
+              <ol align="left">
+                <li>Share Your Notes With Your Friends</li>
+                <li>Manage Shared Note</li>
+                <li>Give Permission to notes while sharing</li>
+              </ol>
+            </label>
+          </article>
+
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= ENV['stripe_publishable_key'] %>"
+                data-description="A month's subscription"
+                data-amount="1500"
+                data-locale="auto"></script>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-4" align="center">
+      <div class="" style="border: 2px solid green; padding: 20px 20px 20px; background-color:#99FF99">
+        <%= form_tag charges_path do %>
+        <%= hidden_field_tag :amount, 2500 %>
+          <article>
+            <% if flash[:error].present? %>
+              <div id="error_explanation">
+                <p><%= flash[:error] %></p>
+              </div>
+            <% end %>
+            <label class="amount">
+              Buy NoteMe Platinum Version<br>
+              <span>Only At <b>$25.00</b></span>
+              <hr>
+              <u>This will include</u>
+              <ol align="left">
+                <li>Manage Your Google Calendar</li>
+                <li>Ask For Permission Of Shared Note</li>
+                <li>Set Reminder Of Note in Google Calendar</li>
+              </ol>
+            </label>
+          </article>
+
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= ENV['stripe_publishable_key'] %>"
+                data-description="A month's subscription"
+                data-amount="2500"
+                data-locale="auto"></script>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
