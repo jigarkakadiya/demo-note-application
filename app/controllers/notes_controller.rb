@@ -92,7 +92,7 @@ class NotesController < ApplicationController
 
   def set_reminder(note_title, note_id, reminder_date)
     new_calendar_event(note_title, 'Event Created From NoteMe', reminder_date)
-    reminder = current_user.reminder.build(
+    reminder = current_user.reminders.build(
       note_id: note_id,
       remind_date: reminder_date
     )

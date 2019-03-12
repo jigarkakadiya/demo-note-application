@@ -39,7 +39,7 @@ class User < ApplicationRecord
     dependent: :destroy
   ) # will get all the shared note by the user
   has_one_attached :profile_photo
-
+  has_many :reminders
   #
   ## Custom methods
   #
