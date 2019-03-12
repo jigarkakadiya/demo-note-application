@@ -2,7 +2,6 @@
 
 class UserMailer < ApplicationMailer
   layout 'mailer'
-  
   def invitation_mail(user_email, name)
     @name = name
     mail(to: user_email, subject: 'Join NoteMe')

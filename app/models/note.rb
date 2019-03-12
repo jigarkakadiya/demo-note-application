@@ -33,7 +33,7 @@ class Note < ApplicationRecord
   )
   acts_as_taggable_on :tags
 
-  Note.reindex
+  #Note.reindex
 
   #
   ## Validations
@@ -48,4 +48,4 @@ class Note < ApplicationRecord
     Share.where(note_id: id)
   end
 end
-Note.import(force: true)
+#Note.import(force: true)

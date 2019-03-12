@@ -58,7 +58,7 @@ Rails.application.routes.draw do
       as: :event,
       calendar_id: %r{[^/]+}
 
-  resources :charges do
+  resources :charges, only: [:new, :create] do
     collection do
       get :refund
     end

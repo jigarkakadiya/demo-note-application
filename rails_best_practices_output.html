@@ -60,7 +60,7 @@
       to see more useful Rails Best Practices.
     </p>
     <p>
-        Found 7 warnings.
+        Found 6 warnings.
     </p>
     <table>
           <tr>
@@ -69,12 +69,12 @@
                 />&nbsp;<label for="MoveModelLogicIntoModelReview">Move Model Logic Into Model</label>
               </td>
               <td>
-                <input type="checkbox" class="error-type" id="RemoveUnusedMethodsInControllersReview" value="RemoveUnusedMethodsInControllersReview"
-                />&nbsp;<label for="RemoveUnusedMethodsInControllersReview">Remove Unused Methods In Controllers</label>
+                <input type="checkbox" class="error-type" id="ReplaceComplexCreationWithFactoryMethodReview" value="ReplaceComplexCreationWithFactoryMethodReview"
+                />&nbsp;<label for="ReplaceComplexCreationWithFactoryMethodReview">Replace Complex Creation With Factory Method</label>
               </td>
               <td>
-                <input type="checkbox" class="error-type" id="ReplaceInstanceVariableWithLocalVariableReview" value="ReplaceInstanceVariableWithLocalVariableReview"
-                />&nbsp;<label for="ReplaceInstanceVariableWithLocalVariableReview">Replace Instance Variable With Local Variable</label>
+                <input type="checkbox" class="error-type" id="UseSayWithTimeInMigrationsReview" value="UseSayWithTimeInMigrationsReview"
+                />&nbsp;<label for="UseSayWithTimeInMigrationsReview">Use Say With Time In Migrations</label>
               </td>
           </tr>
           <tr>
@@ -83,12 +83,8 @@
                 />&nbsp;<label for="OveruseRouteCustomizationsReview">Overuse Route Customizations</label>
               </td>
               <td>
-                <input type="checkbox" class="error-type" id="ReplaceComplexCreationWithFactoryMethodReview" value="ReplaceComplexCreationWithFactoryMethodReview"
-                />&nbsp;<label for="ReplaceComplexCreationWithFactoryMethodReview">Replace Complex Creation With Factory Method</label>
-              </td>
-              <td>
-                <input type="checkbox" class="error-type" id="UseSayWithTimeInMigrationsReview" value="UseSayWithTimeInMigrationsReview"
-                />&nbsp;<label for="UseSayWithTimeInMigrationsReview">Use Say With Time In Migrations</label>
+                <input type="checkbox" class="error-type" id="ReplaceInstanceVariableWithLocalVariableReview" value="ReplaceInstanceVariableWithLocalVariableReview"
+                />&nbsp;<label for="ReplaceInstanceVariableWithLocalVariableReview">Replace Instance Variable With Local Variable</label>
               </td>
           </tr>
         <tr>
@@ -120,18 +116,9 @@
             <td class='filename'>
                 config/routes.rb
             </td>
-            <td class='line'>41</td>
+            <td class='line'>39</td>
             <td class='message'>
               <a href='https://rails-bestpractices.com/posts/2010/07/22/overuse-route-customizations/' target='_blank'>overuse route customizations (customize_count > 3)</a>
-            </td>
-          </tr>
-          <tr class="RemoveUnusedMethodsInControllersReview">
-            <td class='filename'>
-                app/controllers/notes_controller.rb
-            </td>
-            <td class='line'>78</td>
-            <td class='message'>
-              <a href='' target='_blank'>remove unused methods (NotesController#set_reminder)</a>
             </td>
           </tr>
           <tr class="ReplaceComplexCreationWithFactoryMethodReview">
