@@ -72,7 +72,7 @@ class SharesController < ApplicationController
     share = Share.new(share_data)
     share.email = email
     share.shared_by = current_user.id
-    flag = share.save ? 'Y' : 'N'
+    flag = share.save ? 1 : 0
     flag
   end
 end
