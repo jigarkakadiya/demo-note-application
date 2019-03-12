@@ -62,17 +62,19 @@ class SharesController < ApplicationController
     @share.update(permission_id: 2)
   end
 
-  private
-
-  def share_data
-    params.require(:share).permit(:note_id, :permission_id)
-  end
-
   def record_shared_note(email)
+    p share_data
     share = Share.new(share_data)
     share.email = email
     share.shared_by = current_user.id
     flag = share.save ? 'Y' : 'N'
+    p share.errors.full_messages
     flag
+  end
+
+  private
+
+  def share_data
+    params.require(:share).permit(:note_id, :permission_id)
   end
 end
