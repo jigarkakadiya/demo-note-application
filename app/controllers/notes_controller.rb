@@ -19,7 +19,7 @@ class NotesController < ApplicationController
     return false unless note.save
 
     msg = 'New Note Added'
-    check_reminder(msg, @note, params[:do_remind], params[:remind_date][0])
+    check_reminder(msg, note, params[:do_remind], params[:remind_date][0])
   end
 
   def edit; end
