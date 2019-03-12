@@ -5,7 +5,7 @@ class Note < ApplicationRecord
   #include Elasticsearch::Model
   #include Elasticsearch::Model::Callbacks
 
-  searchkick
+  #searchkick
   acts_as_taggable
 
   #

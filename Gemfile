@@ -83,7 +83,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem "rails_best_practices"
 gem 'rubocop', require: false
-gem 'searchkick'
+#gem 'searchkick'
 gem 'stripe'
 gem 'tinymce-rails'
 gem 'will_paginate'
