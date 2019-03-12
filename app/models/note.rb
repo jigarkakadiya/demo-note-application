@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'elasticsearch/model'
+#require 'elasticsearch/model'
 class Note < ApplicationRecord
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  #include Elasticsearch::Model
+  #include Elasticsearch::Model::Callbacks
 
   searchkick
   acts_as_taggable
