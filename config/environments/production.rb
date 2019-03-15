@@ -95,8 +95,10 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # for devise
-  config.action_mailer.default_url_options = { host: 'https://me-noteme.herokuapp.com', protocol: 'http' }
-
+  #config.action_mailer.default_url_options = { host: 'https://me-noteme.herokuapp.com', protocol: 'http' }
+  config.action_mailer.default_url_options = { host: 'localhost', protocol: 'http', port: 3000 }
+  config.action_mailer.delivery_method = :letter_opener
+=begin
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
@@ -111,4 +113,5 @@ Rails.application.configure do
        authentication:       'plain',
        enable_starttls_auto: true
      }
+=end
 end

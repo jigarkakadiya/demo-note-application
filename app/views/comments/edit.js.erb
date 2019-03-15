@@ -1,4 +1,6 @@
-$("#comment").html("<%= escape_javascript(render 'edit' ) %>");
+$("#comment").html("<%= escape_javascript(render 'form', note: @note, comment: @comment) %>");
 $(".modal-title").text("Edit Comment");
 $(".submit").attr("value","Edit Comment");
-$("#comment").modal('show');
+$("#comment").modal('show')
+tinymce.remove();
+tinymce.init({selector:'textarea'});

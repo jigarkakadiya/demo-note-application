@@ -12,18 +12,30 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = current_user.comment.build(comment_params)
-    @comment.save
+    @comment = current_user.comments.build(comment_params)
+    return false if !@comment.save
+
+    respond_to do |format|
+      format.js { render 'comments/load_data.js.erb' }
+    end
   end
 
   def edit; end
 
   def update
-    @comment.update(comment_params)
+    return false if !@comment.update(comment_params)
+
+    respond_to do |format|
+      format.js { render 'comments/load_data.js.erb' }
+    end
   end
 
   def destroy
-    @comment.destroy
+    return false if !@comment.destroy
+
+    respond_to do |format|
+      format.js { render 'comments/load_data.js.erb' }
+    end
   end
 
   private
@@ -33,7 +45,7 @@ class CommentsController < ApplicationController
   end
 
   def my_note
-    @note = Note.find(params[:note_id])
+    @note = Note.find_by(id: params[:note_id])
   end
 
   def paginate_comments
@@ -41,6 +53,6 @@ class CommentsController < ApplicationController
   end
 
   def my_comment
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find_by(id: params[:id])
   end
 end
