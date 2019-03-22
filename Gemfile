@@ -69,7 +69,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'activeadmin'
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'bootstrap'
-gem 'bootstrap-sass'
+#gem 'bootstrap-sass'
 gem 'cancancan', '~> 2.0'
 gem 'devise'
 #gem 'elasticsearch-model'
