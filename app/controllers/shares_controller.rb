@@ -75,6 +75,6 @@ class SharesController < ApplicationController
   private
 
   def share_data
-    params.require(:share).permit(:note_id, :permission_id)
+    params.require(:share).permit(:note_id, :permission_id, :email)
   end
 end
