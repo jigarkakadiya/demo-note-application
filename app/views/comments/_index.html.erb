@@ -26,12 +26,12 @@
              remote: true, class: "btn btn-info" %></center>
           <b>This note is shared to</b>
           <table class="table table-stripped table-bordered">
-            <% if note.shared_users.empty? %>
+            <% if note.shares.empty? %>
             <tr>
               <td class="msg">No Shares</td>
             </tr>
             <% end %>
-            <% note.shared_users.each do |user| %>
+            <% note.shares.each do |user| %>
             <tr>
               <td><%= user.email %><br></td>
             </tr>

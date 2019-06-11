@@ -15,12 +15,12 @@ class SharesController < ApplicationController
   end
 
   def shared_notes_by_me
-    @notes = current_user.notes_shared_by_me.uniq
+    @notes = current_user.shares.uniq
     @active = :shared_by_me
     @deactive = :shared_to_me
     respond_to do |format|
       @flag = 0
-      format.js {render 'notes/load_data.js.erb'}
+      format.js {render 'load_data.js.erb'}
     end
   end
 

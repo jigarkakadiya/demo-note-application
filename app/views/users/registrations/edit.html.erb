@@ -27,11 +27,7 @@
         <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: :true }) do |f| %>
         <div class="col-lg-10" style="border: 0px #A9A9A9 solid">
           <div class="card" style="width:250px">
-            <% if !current_user.profile_photo.attached? %>
-              <img class="card-img-top" src="/img_avatar1.png" alt="Profile image">
-            <% else %>
-              <img class="card-img-top" src="<%= url_for(current_user.profile_photo) %>" alt="Profile image">
-            <% end %>
+            <img class="card-img-top" src="<%= url_for(current_user.avatar) %>" alt="Profile image">
             <div class="card-body">
               <h5>Change Image Here</h5>
               <%= f.file_field :profile_photo, direct_upload: true %>

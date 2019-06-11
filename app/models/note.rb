@@ -40,12 +40,5 @@ class Note < ApplicationRecord
   #
   validates :title, presence: true
   validates :description, presence: true
-
-  #
-  ## Custom Methods
-  #
-  def shared_users
-    Share.where(note_id: id)
-  end
 end
 #Note.import(force: true)
