@@ -49,10 +49,10 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :contact, length: { is: 10 },
                       numericality: { only_integer: true },
-                      presence: true
+                      presence: true, on: :update
   validates :password, confirmation: { case_sensitive: false },
-                      presence: true,
-                      length: { in: 6..15 }
+                      presence: true
+                      length: { in: 6..30 }
   validates :password_confirmation, presence: true
 
 
