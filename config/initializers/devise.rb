@@ -339,4 +339,7 @@ Devise.setup do |config|
                   access_type: 'offline',
                   prompt: 'consent',
                   scope: 'userinfo.email,calendar'
+  # For Devise > 4.1.1
+  # Use the following instead if you are on Devise <= 4.1.1
+  # config.include Devise::TestHelpers, :type => :controller  
 end
