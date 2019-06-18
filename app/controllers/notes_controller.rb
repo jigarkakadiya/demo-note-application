@@ -65,7 +65,7 @@ class NotesController < ApplicationController
   def load_data
     @notes = current_user.my_notes
     if current_user.do_autosave
-      render json: { note_id: note.id }
+      render json: { note_id: @note.id }
     else
       @flag = '1'
       respond_to do |format|
