@@ -16,7 +16,7 @@ class NotesController < ApplicationController
 
   def create
     note = current_user.notes.build(note_params)
-    return false unless note.save
+    note.save
     p "========================"
     msg = 'New Note Added'
     check_reminder(msg, note, params[:do_remind], params[:remind_date][0])
