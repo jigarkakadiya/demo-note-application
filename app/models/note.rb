@@ -38,7 +38,5 @@ class Note < ApplicationRecord
   #
   ## Validations
   #
-  validates :title, presence: true
-  validates :description, presence: true
 end
 #Note.import(force: true)
