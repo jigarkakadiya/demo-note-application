@@ -51,7 +51,7 @@ class User < ApplicationRecord
                       numericality: { only_integer: true },
                       presence: true, on: :update
   validates :password, confirmation: { case_sensitive: false },
-                      presence: true
+                      presence: true,
                       length: { in: 6..30 }
   validates :password_confirmation, presence: true
 
